@@ -1,22 +1,18 @@
 import express from 'express';
-import { createUser, updateUser , removeAccount ,listAccount ,findOneAccount , listRole } from '../controllers/account.controller';
+import { createUser, updateUser , removeAccount ,listAccount ,findAccount , listRole } from '../controllers/account.controller';
 import { login } from '../controllers/auth.controller';
 import { verifyToken } from '../middlewares/auth';
 
 const router = express.Router();
 // auth routes
-router.use('/auth', login);
+router.post('/auth', login);
 
 // user routes
-router.use('/listAcc',verifyToken , listAccount);
-router.use('/listRole',verifyToken, listRole);
-router.use('/user/create', createUser);
-router.use('/user/find/:userId',verifyToken,findOneAccount);
-router.use('/user/update/:userId', verifyToken, updateUser);
-router.use('/user/delete/:userId', verifyToken , removeAccount);
-
-
-
+router.get('/listAcc',verifyToken , listAccount);
+router.get('/listRole',verifyToken, listRole);
+router.post('/user/create', createUser);
+router.get('/user/find/:userId',verifyToken, findAccount);
+router.put('/user/update/:userId', verifyToken, updateUser);
+router.delete('/user/delete/:userId', verifyToken , removeAccount);
 
 export default router;
-

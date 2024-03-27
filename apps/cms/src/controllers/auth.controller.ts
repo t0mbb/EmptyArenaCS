@@ -19,7 +19,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw error;
     }
 
-    const accessToken = jwt.sign(userAccount, process.env.JWT_SECRET);
+    const accessToken = jwt.sign({ userAccount }, process.env.JWT_SECRET);
 
     return res.json({
       message: 'Login success',

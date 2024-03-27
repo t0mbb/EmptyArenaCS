@@ -13,6 +13,8 @@ const app = express();
 
 async function main() {
   await mongoose.connect(process.env.MONGODB);
+  app.use(express.json());
+  
   app.use(routerIndex);
   app.use(routerContribution);
   app.use(routerFaculty);

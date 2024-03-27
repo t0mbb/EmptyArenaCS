@@ -7,6 +7,7 @@ const account = new mongoose.Schema(
     email: {
       type: String,
       trim: true,
+      required: true,
     },
     role_id: {
       type: ObjectId,
@@ -25,8 +26,9 @@ const account = new mongoose.Schema(
       type: String,
       maxLength: 255,
     },
-    hashed_password: {
+    password: {
       type: String,
+      required: true,
     },
     phone: {
       type: String,
