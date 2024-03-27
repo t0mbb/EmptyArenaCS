@@ -1,28 +1,24 @@
 import account from '../models/account.model';
+import roleModel from '../models/role.model';
 import * as _ from 'lodash';
 
-export const listUser = async (req, res, next) => {
+export const listAccount = async (req, res, next) => {
   try {
-    const user = await account.find();
-
-    return res.status(200).json({ user });
+    const accounts = await account.find();
+    return res.status(200).json({ accounts });
+  } catch (err) {
+    next(err);
+  }
+};
+export const listRole = async (req, res, next) => {
+  try {
+    const role = await roleModel.find();
+    return res.status(200).json({ role });
   } catch (err) {
     next(err);
   }
 };
 
-export const removeAccount = async (req, res, next) => {
-  try {
-    const user = req.user;
-    await account.deleteOne(user);
-
-    return res.json({
-      message: 'Delete user successfully',
-    });
-  } catch (err) {
-    next(err);
-  }
-};
 
 export const createUser = async (req, res, next) => {
   try {
@@ -30,7 +26,7 @@ export const createUser = async (req, res, next) => {
     await userAccount.save();
 
     return res.json({
-      message: 'Create user successfully',
+      message: 'Create Account successfully',
     });
   } catch (err) {
     next(err);
@@ -48,6 +44,18 @@ export const updateUser = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+export const removeAccount = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    await account.deleteOne({ _id: userId });
+    return res.json({
+      message: 'Delete Account successfully',
+    });
+  } catch (err) {
+    next(err);
   }
 };
 

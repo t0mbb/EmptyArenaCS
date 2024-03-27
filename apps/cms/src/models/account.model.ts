@@ -10,10 +10,10 @@ const account = new mongoose.Schema(
     },
     role_id: {
       type: ObjectId,
-      ref: 'Role',
+      ref: 'role',
       required: true,
     },
-    name: {
+    fullname: {
       type: String,
       maxLength: 32,
       required: true,
