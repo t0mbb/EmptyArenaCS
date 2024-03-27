@@ -1,6 +1,9 @@
+import { findOneAccount } from '../service/account.service';
 import account from '../models/account.model';
 import roleModel from '../models/role.model';
+import bcrypt from 'bcrypt';
 import * as _ from 'lodash';
+import mongoose from 'mongoose';
 
 export const listAccount = async (req, res, next) => {
   try {
@@ -10,7 +13,6 @@ export const listAccount = async (req, res, next) => {
     next(err);
   }
 };
-
 export const listRole = async (req, res, next) => {
   try {
     const role = await roleModel.find();
@@ -20,9 +22,19 @@ export const listRole = async (req, res, next) => {
   }
 };
 
-
 export const createUser = async (req, res, next) => {
   try {
+    const { email, password } = req.body;
+    const existAccount = await findOneAccount({ email });
+    if (existAccount) {
+      return res.status(400).json({
+        message: "Account existed",
+      });
+    }
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    req.body.password = hash;
+    
     const userAccount = new account(req.body);
     await userAccount.save();
 
@@ -37,7 +49,7 @@ export const createUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const user = req.user;
+    const user = req.body.user[0];
     await account.updateOne({ _id: userId }, user);
 
     return res.json({
@@ -60,10 +72,10 @@ export const removeAccount = async (req, res, next) => {
   }
 };
 
-export const findOneAccount = async (req, res, next) => {
+export const findAccount = async (req, res, next) => {
   try {
-    const { accountId } = req.params;
-    const result = await account.findById({ _id: accountId });
+    const { userId } = req.params;
+    const result = await account.findById({ _id: userId });
     res.json({
       data: result,
       message: 'Account successfully found',

@@ -27,7 +27,7 @@ export const createContribution = async (req, res, next) => {
 export const updateContribution = async (req, res, next) => {
   try {
     const conId = req.params.conId;
-    const conT = req.contribution;
+    const conT = req.body.contribution[0];
     await contributionModel.updateOne({ _id: conId }, conT);
 
     return res.json({
@@ -50,7 +50,7 @@ export const removeContribution = async (req, res, next) => {
   }
 };
 
-export const findOneContribution = async (req, res, next) => {
+export const findContribution = async (req, res, next) => {
   try {
     const { conId } = req.params;
     const result = await contributionModel.findById({ _id: conId });

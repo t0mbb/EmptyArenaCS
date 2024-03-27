@@ -26,7 +26,7 @@ export const createFaculty = async (req, res, next) => {
 
 export const updateFaculty = async (req, res, next) => {
   try {
-    const facultyUpdate = req.faculty;
+    const facultyUpdate = req.body.faculty[0];
     await facultyModel.updateOne( facultyUpdate);
 
     return res.json({
@@ -49,7 +49,7 @@ export const removeFaculty = async (req, res, next) => {
   }
 };
 
-export const findOneFaculty = async (req, res, next) => {
+export const findFaculty = async (req, res, next) => {
   try {
     const { facId } = req.params;
     const result = await facultyModel.findById({ _id: facId });

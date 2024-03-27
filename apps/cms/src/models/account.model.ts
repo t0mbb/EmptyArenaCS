@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType, } from 'mongoose';
+import { Role } from './role.model';
 
 const { ObjectId } = mongoose.Schema;
 
@@ -7,6 +8,7 @@ const account = new mongoose.Schema(
     email: {
       type: String,
       trim: true,
+      required: true,
     },
     role_id: {
       type: ObjectId,
@@ -25,16 +27,27 @@ const account = new mongoose.Schema(
       type: String,
       maxLength: 255,
     },
-    hashed_password: {
+    password: {
       type: String,
+      required: true,
     },
     phone: {
       type: String,
+    },
+    faculty_id:{
+      type: ObjectId,
+      ref: 'faculty',
     },
   },
   {
     timestamps: true,
   }
 );
+
+export type Account = InferSchemaType<typeof account>;
+
+export interface PopolatedAccount extends Omit<Account, 'role_id'> {
+  role_id: Role,
+}
 
 export default mongoose.model('account', account);

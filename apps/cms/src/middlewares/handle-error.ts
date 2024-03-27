@@ -1,9 +1,9 @@
 export const handleError =  (error, _req, res, _next) => {
   const statusCode = error.status || error.statusCode || 500;
+  console.log(error)
 
   return res.status(statusCode).json({
-    status: false,
-    message: error || error.message || "Server error.",
+    message: error.message || "Server error.",
   });
 };
 
