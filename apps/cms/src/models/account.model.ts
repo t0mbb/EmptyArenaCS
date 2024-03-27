@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { InferSchemaType, } from 'mongoose';
+import { Role } from './role.model';
 
 const { ObjectId } = mongoose.Schema;
 
@@ -38,5 +39,11 @@ const account = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+export type Account = InferSchemaType<typeof account>;
+
+export interface PopolatedAccount extends Omit<Account, 'role_id'> {
+  role_id: Role,
+}
 
 export default mongoose.model('account', account);

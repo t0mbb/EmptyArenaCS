@@ -3,8 +3,7 @@ export const handleError =  (error, _req, res, _next) => {
   console.log(error)
 
   return res.status(statusCode).json({
-    status: false,
-    message: error || error.message || "Server error.",
+    message: error.message || "Server error.",
   });
 };
 

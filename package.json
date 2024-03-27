@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
     "antd": "^5.15.4",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",

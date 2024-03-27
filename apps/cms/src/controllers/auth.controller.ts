@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { findOneAccount } from '../service/account.service';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 class LoginError extends Error {
   status: number;
@@ -8,12 +9,18 @@ class LoginError extends Error {
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    const userAccount = await findOneAccount({ username, password });
+    const userAccount = await findOneAccount({ email });
 
     if (!userAccount) {
+      const error = new LoginError('Invalid username or password');
+      error.status = 401;
+      throw error;
+    }
+
+    if (!bcrypt.compareSync(password, userAccount.password)) {
       const error = new LoginError('Invalid username or password');
       error.status = 401;
       throw error;
