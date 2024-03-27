@@ -10,6 +10,7 @@ export const listAccount = async (req, res, next) => {
     next(err);
   }
 };
+
 export const listRole = async (req, res, next) => {
   try {
     const role = await roleModel.find();
