@@ -25,5 +25,8 @@ router.post('/con/update/:conId', verifyToken, authorization([RoleName.MARKETING
 router.delete('/con/delete/:conId', verifyToken, authorization([RoleName.MARKETING_MANAGER,RoleName.ADMIN
                                                             ,RoleName.MARKETING_COORDINATOR,RoleName.STUDENT]) , removeContribution);
 
+
+                                                         
+
 export default router;
 

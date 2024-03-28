@@ -4,8 +4,11 @@ import routerIndex from './routers/index';
 import routerContribution from './routers/contribution'
 import routerFaculty from './routers/faculty'
 import routerComment from './routers/comment'
+import routerFile from './routers/fileUpload'
 import { handleError, handleNotFound } from './middlewares/handle-error';
 import seedData from './seed/role.seeds';
+
+
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
@@ -20,6 +23,7 @@ async function main() {
   app.use(routerContribution);
   app.use(routerFaculty);
   app.use(routerComment);
+  app.use(routerFile);
   app.use(handleError);
 
   app.use(handleNotFound);

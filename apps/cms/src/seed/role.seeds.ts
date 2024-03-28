@@ -1,7 +1,7 @@
 
 import roleModel from '../models/role.model'
 import { MongoError } from 'mongodb';
-import { Request, Response, NextFunction } from 'express';
+
 const roles = [
   { name: "admin" },
   { name: "marketing manager" },

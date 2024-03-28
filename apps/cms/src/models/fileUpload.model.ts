@@ -11,19 +11,19 @@ const fileUpload = new mongoose.Schema(
     },
     filepath: {
         type: String,
-        required: true
+
     },
     fileSize: {
         type : Number,
-        required : true
+
     },
     fileName:{
         type : String, 
-        required : true
+   
     },
     UploadDate:{
         type : Date,
-        required : true
+  
     },
   },
   {
@@ -32,3 +32,6 @@ const fileUpload = new mongoose.Schema(
 );
 
 export default mongoose.model('fileUpload', fileUpload);
+
+
+
