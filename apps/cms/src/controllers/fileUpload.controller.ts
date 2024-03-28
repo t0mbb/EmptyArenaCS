@@ -67,21 +67,16 @@ export const downloadFile = async (req, res, next) => {
     const sasOptions: BlobSASSignatureValues = {
       containerName: containerZip,
       blobName: time,
-      ipRange : { start: "0.0.0.0 ", end: "255.255.255.255" },
-      startsOn: currentTime ,
-      expiresOn: new Date(currentTime.valueOf() + oneDayInMilliseconds),
-      permissions : BlobSASPermissions.parse('r')
+      startsOn: currentTime,
+      expiresOn: new Date(currentTime.valueOf() + oneDayInMilliseconds * 7),
+      permissions: BlobSASPermissions.parse('r')
     };
     
     const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString();
-    const blobSasUri = `${containerClient.getBlockBlobClient(time).url}?${sasToken}`
+    const blobSasUri = `${containerDownload.getBlockBlobClient(time).url}?${sasToken}`
 
     res.json(blobSasUri);
   } catch (err) {
     next(err);
   }
 };
-
-
-
-
