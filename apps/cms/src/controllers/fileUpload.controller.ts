@@ -1,9 +1,13 @@
 import {
+  BlobSASPermissions,
+  BlobSASSignatureValues,
   BlobServiceClient,
   StorageSharedKeyCredential,
+  generateBlobSASQueryParameters
 } from '@azure/storage-blob';
-import fileUploadModel from '../models/fileUpload.model';
 
+import fileUploadModel from '../models/fileUpload.model';
+import archiver from 'archiver';
 const account = process.env.account;
 const accountKey = process.env.accountKey;
 
@@ -14,26 +18,7 @@ const blobServiceClient = new BlobServiceClient(
 );
 
 const containerName = process.env.containerName;
-
-export const createBlob = async (req, res, next) => {
-  try {
-    const containerClient = blobServiceClient.getContainerClient(containerName);
-
-    const content = 'Hello world!';
-    const blobName = 'newblob' + new Date().getTime();
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-    const uploadBlobResponse = await blockBlobClient.upload(
-      content,
-      content.length
-    );
-    console.log(
-      `Upload block blob ${blobName} successfully`,
-      uploadBlobResponse.requestId
-    );
-  } catch (error) {
-    next(error);
-  }
-};
+const containerZip = process.env.CONTAINERZIP;
 
 export const uploadFile = async (req, res, next) => {
   try {
@@ -60,3 +45,43 @@ export const uploadFile = async (req, res, next) => {
     next(err);
   }
 };
+
+export const downloadFile = async (req, res, next) => {
+  try {
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blobClient = containerClient.getBlobClient(req.body.fileName);
+    const download = await blobClient.downloadToBuffer();
+    const archive = archiver('zip', {
+      zlib: { level: 9 } // Sets the compression level.
+    });
+    archive.append(download, { name: req.body.fileName });
+    archive.finalize();
+
+    const time = `${Date.now()}.zip`
+    const oneDayInMilliseconds = 24 * 3600 * 1000;
+    const containerDownload = blobServiceClient.getContainerClient(containerZip);
+    const zipClient = containerDownload.getBlockBlobClient(time);
+    await zipClient.uploadStream(archive);
+    const currentTime = new Date();
+
+    const sasOptions: BlobSASSignatureValues = {
+      containerName: containerZip,
+      blobName: time,
+      ipRange : { start: "0.0.0.0 ", end: "255.255.255.255" },
+      startsOn: currentTime ,
+      expiresOn: new Date(currentTime.valueOf() + oneDayInMilliseconds),
+      permissions : BlobSASPermissions.parse('r')
+    };
+    
+    const sasToken = generateBlobSASQueryParameters(sasOptions, sharedKeyCredential).toString();
+    const blobSasUri = `${containerClient.getBlockBlobClient(time).url}?${sasToken}`
+
+    res.json(blobSasUri);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+
