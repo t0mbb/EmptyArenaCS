@@ -1,20 +1,29 @@
 import { Button, Checkbox, Form, type FormProps, Input } from 'antd';
+import { login } from '../../services/auth.service';
+import { useState } from 'react';
 
 type FieldType = {
-  username?: string;
-  password?: string;
+  email: string;
+  password: string;
   remember?: string;
 };
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-  console.log('Success:', values);
-};
-
-const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
-
 const Login = () => {
+  const [message, setMessage] = useState();
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const response = await login(values.email, values.password)
+    sessionStorage.setItem('accessToken', response.data.accessToken);
+    sessionStorage.setItem('userData', response.data.userData);
+    
+    setMessage(response.data.message);
+    console.log('login', response);
+
+  };
+  
+  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
   return (
     <Form
       name="basic"
@@ -27,9 +36,9 @@ const Login = () => {
       autoComplete="off"
     >
       <Form.Item<FieldType>
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Please input your email!' }]}
       >
         <Input />
       </Form.Item>
@@ -55,6 +64,7 @@ const Login = () => {
           Submit
         </Button>
       </Form.Item>
+      {message ? message : null}
     </Form>
   );
 };

@@ -30,10 +30,9 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     return res.json({
       message: 'Login success',
-      data: {
-        accessToken
-      }
-    })
+      accessToken,
+      userData: userAccount
+    });
   } catch (err) {
     next(err);
   }
