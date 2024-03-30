@@ -15,15 +15,15 @@ export function verifyToken(req, _res, next) {
   }
   
   const userAccessToken = bearerToken.split('Bearer ')[1];
-  const userData = jwt.verify(userAccessToken, process.env.JWT_SECRET);
-  req.user = userData;
+  const userData : any = jwt.verify(userAccessToken, process.env.JWT_SECRET);
+  req.user = userData.userAccount;
 
   return next();
 }
 
 export function authorization(allowRole: RoleName[]) {
   return function(req, res, next) {
-    const userData: PopolatedAccount = req.user.userAccount;
+    const userData: PopolatedAccount = req.user;
     if (!allowRole.includes(userData.role_id.name as RoleName)) {
       const error =  new JwtError('Unauthorized');
       error.status = 401;

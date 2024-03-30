@@ -45,7 +45,7 @@ const account = new mongoose.Schema(
 );
 
 export type Account = InferSchemaType<typeof account>;
-
+// ROLE ID tu db sang la type string , khi populate vao bang se khong bi o dang string
 export interface PopolatedAccount extends Omit<Account, 'role_id'> {
   role_id: Role,
 }

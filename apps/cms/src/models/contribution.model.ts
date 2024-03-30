@@ -13,14 +13,12 @@ const contribution = new mongoose.Schema(
         type: ObjectId,
         ref:'faculty',
     },
-    submission_date: {
-        type: Date,
-    },
     upload_date: {
         type: Date,
     },
     closure_date: {
         type: Date,
+
     },
     finalclosure_date: {
         type: Date,

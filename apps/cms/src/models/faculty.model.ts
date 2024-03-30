@@ -4,7 +4,7 @@ const faculty = new mongoose.Schema(
   {
     name: {
       type: String,
-      maxLength: 16,
+      maxLength: 32,
       required: true,
     },
   },

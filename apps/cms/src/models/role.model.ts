@@ -1,4 +1,4 @@
-import mongoose, { InferSchemaType } from 'mongoose';
+import mongoose, { InferSchemaType, ObjectId } from 'mongoose';
 
 export enum RoleName {
   ADMIN = 'admin',
@@ -7,9 +7,6 @@ export enum RoleName {
   STUDENT = 'student',
   GUEST = 'guest',
 }
-
-
-///////??????//////////////
 const role = new mongoose.Schema(
   {
     name: {
@@ -24,9 +21,8 @@ const role = new mongoose.Schema(
     timestamps: true,
   }
 );
-////////????//////////
-export type Role = InferSchemaType<typeof role>;
 
+export type Role = InferSchemaType<typeof role>;
 export default mongoose.model('role', role);
 
 

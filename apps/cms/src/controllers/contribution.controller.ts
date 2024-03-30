@@ -1,7 +1,10 @@
 import contributionModel from '../models/contribution.model';
+import { RoleName } from '../models/role.model';
+import {getRoleID} from '../service/account.service';
+import accountModel from '../models/account.model';
 import * as _ from 'lodash';
-
-export const listContribution = async (req, res, next) => {
+import { sendMail } from '../service/sendMail.service';
+export const listContribution = async (_req, res, next) => {
   try {
     const contribution = await contributionModel.find();
     return res.status(200).json({ contribution });
@@ -13,9 +16,20 @@ export const listContribution = async (req, res, next) => {
 
 export const createContribution = async (req, res, next) => {
   try {
-    const contribution = new contributionModel(req.body);
+    const currentDate = new Date(req.body.closure_date); // Assuming the date format is "YYYY-MM-DD"
+    currentDate.setDate(currentDate.getDate() + 14); // Adding 14 days
+    const contribution = new contributionModel({
+      account_id : req.user._id,
+      faculty_id : req.user.faculty_id,
+      upload_date : Date.now(),
+      closure_date : req.body.closure_date,
+      finalclosure_date: req.body.finalclosure_date ?? currentDate,
+      status: req.body.status
+    });
     await contribution.save();
-
+    const roleID = await getRoleID(RoleName.MARKETING_COORDINATOR);
+    const accountFound = await accountModel.findOne({role_id : roleID._id , faculty_id : req.user.faculty_id})
+    await sendMail(accountFound.email);
     return res.json({
       message: 'New Contribution has been added',
     });
@@ -62,3 +76,5 @@ export const findContribution = async (req, res, next) => {
     next(error);
   }
 };
+
+
