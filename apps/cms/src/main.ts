@@ -19,7 +19,7 @@ async function main() {
   await seedData();
   app.use(
     cors({
-      origin: 'http://localhost:4201',
+      origin: 'http://localhost:4200',
       optionsSuccessStatus: 200,
     })
   );

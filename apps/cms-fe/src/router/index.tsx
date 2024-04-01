@@ -8,8 +8,9 @@ import Login from '../pages/Login/Login';
 
 const router = createBrowserRouter([
   {
+    
     path: '/login',
-    element: < Layout1 />,
+    element: < MainLayout />,
     children :[
       {
         path: '',
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <MainLayout />,
+    element: <Layout1 />,
     children: [
       {
         path: '',

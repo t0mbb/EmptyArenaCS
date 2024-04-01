@@ -5,7 +5,6 @@ import { useState } from 'react';
 type FieldType = {
   email: string;
   password: string;
-  remember?: string;
 };
 
 const Login = () => {
@@ -49,14 +48,6 @@ const Login = () => {
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item<FieldType>
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{ offset: 8, span: 16 }}
-      >
-        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

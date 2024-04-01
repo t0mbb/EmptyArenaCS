@@ -16,8 +16,8 @@ export const listContribution = async (_req, res, next) => {
 
 export const createContribution = async (req, res, next) => {
   try {
-    const currentDate = new Date(req.body.closure_date); // Assuming the date format is "YYYY-MM-DD"
-    currentDate.setDate(currentDate.getDate() + 14); // Adding 14 days
+    const currentDate = new Date(req.body.closure_date);
+    currentDate.setDate(currentDate.getDate() + 14); 
     const contribution = new contributionModel({
       account_id : req.user._id,
       faculty_id : req.user.faculty_id,
