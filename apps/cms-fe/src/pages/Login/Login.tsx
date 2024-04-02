@@ -37,13 +37,15 @@ const Login = () => {
         onFinishFailed={onFinishFailed}
       >
             <Typography.Title>Sign In</Typography.Title>
+            <Divider></Divider>
         <Form.Item<FieldType>
           label="Email"
           name="email"
           rules={[
             {
               required: true,
-              message: "Please input your email!",
+              type: "email",
+              message: "Please input correctly email!",
             },
           ]}
         >
@@ -70,7 +72,7 @@ const Login = () => {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: "100%" , background : "cyan" }} >
+            style={{ width: "100%"  }} >
             SIGN IN
           </Button>
           
