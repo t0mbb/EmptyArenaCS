@@ -13,6 +13,10 @@ export const listAccount = async (req, res, next) => {
     next(err);
   }
 };
+
+export const checkToken = (req, res , next) =>{
+  res.status(200).json({message : "token is valid"});
+}
 export const listRole = async (req, res, next) => {
   try {
     const role = await roleModel.find();

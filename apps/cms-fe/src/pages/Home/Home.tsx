@@ -4,6 +4,8 @@ import { Space, Table, Tag, type FormProps, Button } from 'antd';
 import { getListAcc } from '../../services/account.service';
 
 import type { TableProps } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import RoleProtected, { RoleName } from '../../components/RoleProtected/RoleProtected';
 
 const { Column, ColumnGroup } = Table;
 
@@ -14,9 +16,11 @@ interface DataType {
   lastName: string;
   age: number;
   address: string;
+  _id: string;
 }
-const Home = () => {
 
+const Home = () => {
+  const navigate = useNavigate();
   const [listAcc, setListAcc] = useState();
 
   const getListAccFromBE = async () => {
@@ -38,9 +42,11 @@ const Home = () => {
     key="action"
     render={(_: any, record: DataType) => (
       <Space size="middle">
-        <Button> <a>Details</a></Button>
-       <Button> <a>Update {record.lastName}</a> </Button>
-       <Button> <a>Delete</a></Button>
+        <Button onClick={() => navigate('/')}>Details</Button>
+        <Button onClick={() => navigate(`/Dashboard/Update/${record._id}`)}>Update</Button>
+        <RoleProtected allowedRole={[RoleName.ADMIN]}>
+          <Button onClick={() => navigate('/')}>Delete</Button>
+        </RoleProtected>
       </Space>
     )}
   />

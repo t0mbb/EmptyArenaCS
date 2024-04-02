@@ -18,8 +18,8 @@ const Login = () => {
    try{
     const response = await login(values.email, values.password)
       sessionStorage.setItem('accessToken', response.data.accessToken);
-      sessionStorage.setItem('userData', response.data.userData);
-      console.log('login', response);
+      sessionStorage.setItem('userData', JSON.stringify(response.data.userData));
+
       message.success("Login Successful!");
       navigate('/dashboard');
     } catch {

@@ -6,6 +6,7 @@ import {
   listAccount,
   findAccount,
   listRole,
+  checkToken,
 } from '../controllers/account.controller';
 import { login } from '../controllers/auth.controller';
 import { authorization, verifyToken } from '../middlewares/auth';
@@ -16,6 +17,8 @@ const router = express.Router();
 // auth routes
 router.post('/auth/login', login);
 //
+
+router.get('/getaccessToken' ,verifyToken, checkToken)
 
 // user routes
 router.get('/user/listAcc', verifyToken, authorization([RoleName.ADMIN]), listAccount);
