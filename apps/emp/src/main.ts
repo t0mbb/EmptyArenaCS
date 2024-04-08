@@ -1,12 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import routerIndex from './routers/index';
-import routerContribution from './routers/contribution';
-import routerFaculty from './routers/faculty';
-import routerComment from './routers/comment';
-import routerFile from './routers/fileUpload';
+import routerAccount from './routers/account';
+import routermemberCard from './routers/membercard';
+import routerOrders from './routers/orders';
+import routerPoolTable from './routers/pooltable';
+import routerProduct from './routers/product';
 import { handleError, handleNotFound } from './middlewares/handle-error';
-import seedData from './seed/role.seeds';
+
 import cors from 'cors';
 
 const host = process.env.HOST ?? 'localhost';
@@ -16,7 +16,7 @@ const app = express();
 
 async function main() {
   await mongoose.connect(process.env.MONGODB);
-  await seedData();
+
   app.use(
     cors({
       origin: 'http://localhost:4200',
@@ -26,11 +26,11 @@ async function main() {
 
   app.use(express.json());
 
-  app.use(routerIndex);
-  app.use(routerContribution);
-  app.use(routerFaculty);
-  app.use(routerComment);
-  app.use(routerFile);
+  app.use(routerAccount);
+  app.use(routermemberCard);
+  app.use(routerOrders);
+  app.use(routerPoolTable);
+  app.use(routerProduct);
   app.use(handleError);
 
   app.use(handleNotFound);

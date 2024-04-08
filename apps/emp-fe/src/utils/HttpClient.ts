@@ -5,9 +5,7 @@ export const httpClient: AxiosInstance = axios.create({
 });
 
 httpClient.interceptors.request.use((config) => {
-  config.headers.authorization = `Bearer ${sessionStorage.getItem(
-    'accessToken'
-  )}`;
+  config.headers.authorization = `Bearer ${sessionStorage.getItem('accessToken')}`;
   return config;
 });
 

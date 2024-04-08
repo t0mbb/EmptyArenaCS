@@ -1,8 +1,10 @@
-import mongoose, { InferSchemaType } from 'mongoose';
-import { Role } from './role.model';
+import mongoose, { InferSchemaType, } from 'mongoose';
 
-const { ObjectId } = mongoose.Schema;
-
+export enum RoleName {
+  ADMIN = 'admin',
+  STAFF = 'staff',
+  GUEST = 'guest',
+}
 const account = new mongoose.Schema(
   {
     email: {
@@ -10,9 +12,10 @@ const account = new mongoose.Schema(
       trim: true,
       required: true,
     },
-    role_id: {
-      type: ObjectId,
-      ref: 'role',
+    role: {
+      type : String,
+      enum: RoleName,
+      maxLength: 32,
       required: true,
     },
     fullname: {
@@ -33,21 +36,12 @@ const account = new mongoose.Schema(
     },
     phone: {
       type: String,
-    },
-    faculty_id: {
-      type: ObjectId,
-      ref: 'faculty',
-    },
+    }
   },
   {
     timestamps: true,
   }
 );
 
-export type Account = InferSchemaType<typeof account>;
-// ROLE ID tu db sang la type string , khi populate vao bang se khong bi o dang string
-export interface PopolatedAccount extends Omit<Account, 'role_id'> {
-  role_id: Role;
-}
 
 export default mongoose.model('account', account);

@@ -1,0 +1,11 @@
+.button {
+    border-radius:9px;
+    border: 1px solid rgb(0, 0, 0);
+}
+.Column{
+    border : 1px solid rgb(0, 0, 0);
+}
+.outlet{
+    color:whitesmoke;
+    background-color: #141414;
+}

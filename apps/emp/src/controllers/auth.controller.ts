@@ -31,7 +31,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     return res.json({
       message: 'Login success',
       accessToken,
-      userData: userAccount,
+      userData: userAccount
     });
   } catch (err) {
     next(err);

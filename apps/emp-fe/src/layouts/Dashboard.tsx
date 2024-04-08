@@ -1,97 +1,67 @@
 import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  UserOutlined, PlusOutlined ,FacebookFilled
 } from '@ant-design/icons';
 
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Button, ConfigProvider, Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 import '../assets/css/dash.css';
-import ForwardTable from 'antd/es/table/Table';
-const { Header, Sider, Content, Footer } = Layout;
+import HeaderComponent from "./Header"
+import SidebarComponent from"./Sidebar"
+import RoleProtected , {RoleName} from '../components/RoleProtected/RoleProtected';
+const { Content } = Layout;
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
   const nav = useNavigate();
-
   const onClick = ({ key }: { key: string }) => {
-    if (key === '/logout') {
-      sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('userData');
-
-      return nav('/login');
-    }
-
     return nav(key);
   };
+
+  type MenuItem = {
+    key: string;
+    label: React.ReactNode;
+    icon?: React.ReactNode;
+    children?: MenuItem[];
+};
+  const items: MenuItem[] = [
+    {
+      key: '/home',
+      label: 'Home',
+      icon: <UserOutlined />,
+    }, 
+    {
+      key: '/account',
+      label: 'Account',
+      icon: <UserOutlined />,
+    }, 
+    { key: '/pooltable', label: 'Pool Table', icon: <FacebookFilled />  },
+    { key: '/membership', label: 'Membership', icon: <MenuFoldOutlined />  },
+    { key: '/category', label: 'Category', icon: <MenuFoldOutlined /> },
+  
+
+  ] 
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          onClick={onClick}
-          items={[
-            {
-              key: '/dashboard',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '/dashboard/update',
-              icon: <VideoCameraOutlined />,
-              label: 'Update',
-            },
-            {
-              key: '/dashboard/123',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-            {
-              key: '/logout',
-              icon: <UploadOutlined />,
-              label: 'logout',
-            },
-          ]}
-        />
-      </Sider>
-      <Layout style={{}}>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <Outlet />
-        </Content>
-      </Layout>
-      <Footer></Footer>
-    </Layout>
+    <ConfigProvider theme={{ token: { colorBgLayout: "#141414" , colorPrimary: '#e84749' , }}} >   
+        <Layout style={{ minHeight: '100vh'  }}>
+        
+        <SidebarComponent collapsed={collapsed} items={items} onClick={onClick} />
+          <Layout >
+            <HeaderComponent collapsed={collapsed} toggleCollapsed={toggleCollapsed}   />
+            <Content className="Content">
+                <Outlet />
+            </Content>
+          </Layout>
+ 
+        </Layout>
+    
+    </ConfigProvider>
   );
 };
 
