@@ -4,16 +4,12 @@ const { ObjectId } = mongoose.Schema;
 
 const order_items = new mongoose.Schema(
   {
-    order_id:{
-        type: ObjectId,
-        ref:'orders',
-    },
-    product_id:{
+    product_id: {
       type: ObjectId,
-      ref:'product',
-  },
+      ref: 'product',
+    },
     quantity: {
-        type : Number,
+      type: Number,
     },
   },
   {
@@ -22,6 +18,3 @@ const order_items = new mongoose.Schema(
 );
 
 export default mongoose.model('order_items', order_items);
-
-
-

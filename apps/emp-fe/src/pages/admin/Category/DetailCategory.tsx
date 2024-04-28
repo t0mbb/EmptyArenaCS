@@ -43,8 +43,9 @@ const Detail = () => {
   };
 
   const confirm = async (_id: string) => {
-    deleteProduct(_id);
-    message.success('Delete Success');
+   const res = await deleteProduct(_id);
+    message.info(res.data.message);
+    await getListFromBE();
   };
 
   const cancel = (e?: React.MouseEvent<HTMLElement>) => {

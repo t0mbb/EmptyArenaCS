@@ -37,3 +37,14 @@ export async function updatePoolTable(id : any , data : any){
   return response
 }
 
+export async function startService(id : any) {
+  const data = await httpClient.get(`/startService/${id}`);
+
+  return data
+}
+export async function stopService(id : any) {
+  const data = await httpClient.get(`/stopService/${id}`);
+
+  return data
+}
+

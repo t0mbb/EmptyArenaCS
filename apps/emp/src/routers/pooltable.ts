@@ -4,7 +4,7 @@ import {
       createPoolTable,
       updatePoolTable,
       removePoolTable,
-      findPoolTable} from '../controllers/pool_table.controller';
+      findPoolTable , startService, stopService} from '../controllers/pool_table.controller';
 
 
 import { authorization, verifyToken } from '../middlewares/auth';
@@ -13,14 +13,17 @@ import { RoleName } from '../models/account.model';
 const router = express.Router();
 
 // PoolTable routes
-router.get('/listPoolTable', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), listPoolTable);
+router.get('/listPoolTable', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), listPoolTable);
 
-router.post('/createPoolTable', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), createPoolTable);
+router.post('/createPoolTable', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), createPoolTable);
 
-router.delete('/removePoolTable/:pool_TableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), removePoolTable);
+router.delete('/removePoolTable/:pool_TableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), removePoolTable);
+
+router.get('/startService/:pool_TableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), startService);
+router.get('/stopService/:pool_TableId' , verifyToken ,authorization([RoleName.ADMIN,RoleName.STAFF]),stopService )
 
 router.get('/findPoolTable/:pool_TableId', verifyToken, findPoolTable);
-router.put('/updatePoolTable/:pool_TableId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF,]), updatePoolTable);
+router.put('/updatePoolTable/:pool_TableId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF]), updatePoolTable);
 
 
 

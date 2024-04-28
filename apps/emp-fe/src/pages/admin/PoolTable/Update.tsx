@@ -59,7 +59,7 @@ import {
       }
     };
 
-    const statusList = Object.keys(StatusName).map((status) => {
+    const statusList = Object.keys(StatusName).filter((status) => status !== "USED").map((status) => {
         if (status) {
           return (
             <TreeNode
@@ -69,7 +69,7 @@ import {
             />
           );
         }
-        return null;
+        
       });
     
       const brandList = Object.keys(BrandName).map((brand) => {
@@ -132,7 +132,7 @@ import {
             name="brandname"
             rules={[{ required: true, message: 'Please choose!' }]}
           >
-             <Input disabled/>
+             <TreeSelect>{brandList}</TreeSelect>
           </Form.Item>
           <Form.Item
             label="Price per Hours"

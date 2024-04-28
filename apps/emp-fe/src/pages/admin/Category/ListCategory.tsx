@@ -48,12 +48,11 @@ const Home = () => {
   }, []);
 
   const confirm = async (_id: string) => {
-    try {
-      await deleteCategory(_id);
-      message.success('Delete Success');
-    } catch (error) {
-      message.error('Error delete');
-    }
+  
+      const res = await deleteCategory(_id);
+      console.log(res.data);
+      message.info(res.data.message);
+  
   };
 
   const cancel = (e?: React.MouseEvent<HTMLElement>) => {

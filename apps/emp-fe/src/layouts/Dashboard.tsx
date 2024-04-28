@@ -41,6 +41,7 @@ const App: React.FC = () => {
       icon: <UserOutlined />,
     }, 
     { key: '/pooltable', label: 'Pool Table', icon: <FacebookFilled />  },
+    { key: '/order', label: 'Order', icon: <FacebookFilled />  },
     { key: '/membership', label: 'Membership', icon: <MenuFoldOutlined />  },
     { key: '/category', label: 'Category', icon: <MenuFoldOutlined /> },
   

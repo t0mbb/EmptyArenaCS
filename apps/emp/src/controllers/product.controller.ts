@@ -118,10 +118,19 @@ export const createCategory = async (req, res, next) => {
   export const removeCategory = async (req, res, next) => {
     try {
       const categoryId = req.params.categoryId;
-      await categoryModel.deleteOne({_id : categoryId});
+      const check = await productModel.findOne({category_id : categoryId});
+      if(!check){
+        await categoryModel.deleteOne({_id : categoryId});
       return res.json({
         message: 'Delete Category successfully',
       });
+      }
+      else {
+        return res.json({
+          message: 'These are still product in Category',
+        });
+      }
+      
     } catch (err) {
       next(err);
     }

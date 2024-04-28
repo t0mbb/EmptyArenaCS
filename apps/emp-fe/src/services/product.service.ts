@@ -5,6 +5,7 @@ export async function getListProduct(id : any) {
 
   return data
 }
+
 export async function createProduct(input : any){
     const data = await httpClient.post('/createProduct' , input);
     return data

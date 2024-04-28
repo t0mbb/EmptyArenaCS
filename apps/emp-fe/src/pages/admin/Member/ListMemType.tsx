@@ -17,6 +17,13 @@ import {
   deleteMemberType,
 } from '../../../services/membercard.service';
 
+
+import gold from '../../../assets/image/gold.png';
+import silver from '../../../assets/image/silver.png';
+import platinum from '../../../assets/image/platinum.png';
+import bronze from '../../../assets/image/bronze.png';
+import diamond from '../../../assets/image/diamond.png';
+
 import { useNavigate } from 'react-router-dom';
 import RoleProtected, {
   RoleName,
@@ -59,6 +66,9 @@ const Home = () => {
   const cancel = (e?: React.MouseEvent<HTMLElement>) => {
     message.error('Cancel Delete');
   };
+
+
+  
   return (
     <ConfigProvider
       theme={{
@@ -71,6 +81,7 @@ const Home = () => {
         },
       }}
     >
+      <div style={{overflowX : 'auto' }}>
       <FloatButton
         shape="circle"
         type="primary"
@@ -83,8 +94,9 @@ const Home = () => {
         }}
         icon={<PlusOutlined />}
       />
-
+          
       <Table dataSource={listTable}>
+       
         <Column
           title="Membercard Type"
           dataIndex="name"
@@ -95,37 +107,45 @@ const Home = () => {
           render={(name: string) => {
             let tagColor = '';
             let textColor = '';
+            let imageSrc = '';
             if (name === 'bronze') {
               tagColor = '#CD7F32';
-          
+              imageSrc = bronze;
             } else if (name === 'silver') {
               tagColor = 'silver';
-        
+              imageSrc = silver;
             } else if (name === 'gold') {
               tagColor = 'yellow';
-              textColor = 'black';
+              imageSrc = gold;
             } else if (name === 'platinum') {
               tagColor = '#00FFFF';
-              textColor = 'black';
+              imageSrc = platinum;
             } else if (name === 'diamond') {
               tagColor = '#facfd9';
-              textColor = 'black';
+              imageSrc = diamond;
             } else {
               tagColor = 'black';
               textColor = 'white';
+              imageSrc = diamond;
             }
 
             return (
-              <Tag
+              <div>
+                 <img src={imageSrc} alt={name} style={{ width: 100, height: 75 , marginRight : 10}}/>
+                 <Tag
                 style={{
                   backgroundColor: tagColor,
                   borderRadius: '10px',
                   padding: '5px 10px',
                   color: textColor,
                 }}
+                onClick={() => navigate(`/membership/detailmemtype/${name}`)}
               >
                 {name.toUpperCase()}
               </Tag>
+
+
+              </div>
             );
           }}
         />
@@ -147,6 +167,8 @@ const Home = () => {
             </Tag>
           )}
         />
+
+       
         <Column
           title="Durations"
           dataIndex="durations"
@@ -202,8 +224,11 @@ const Home = () => {
           )}
         />
       </Table>
+      </div>
     </ConfigProvider>
   );
 };
 
 export default Home;
+
+

@@ -19,6 +19,7 @@ const Home = () => {
 
     const user = JSON.parse(sessionStorage.getItem('userData') || '{}');
   return (
+    <div style={{ overflowX: 'auto' }}> 
     <ConfigProvider
       theme={{
         token: {
@@ -31,8 +32,6 @@ const Home = () => {
         },
       }}
     >
-
-  
       <h1 style={{ display: "flex",
   justifyContent  : "center", color : "whitesmoke"}}>Welcome   {user.fullname} !!!!</h1>
       <img src={imageSrc} style={{width: '1000px',  
@@ -44,6 +43,7 @@ const Home = () => {
    
 
     </ConfigProvider>
+   /</div>
   );
 };
 

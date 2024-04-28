@@ -1,3 +1,4 @@
+import ordersModel from '../models/orders.model';
 import pool_TableModel from '../models/pool_table.model';
 import * as _ from 'lodash';
 
@@ -61,3 +62,61 @@ export const findPoolTable = async (req, res, next) => {
     next(error);
   }
 };
+
+export const startService = async (req, res, next) => {
+  try {
+    const { pool_TableId} = req.params;
+
+    await pool_TableModel.updateOne( {_id : pool_TableId},{
+      status : 'used'
+    });
+    const start = new ordersModel({
+      pool_table_id : pool_TableId,
+      start_time : Date.now()
+    })
+    await start.save();
+    res.json({
+      data : start
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const stopService = async (req, res, next) => {
+  try {
+    const idTable = req.params.pool_TableId;
+    const data : any = await ordersModel.findOne({pool_table_id : idTable}).populate('pool_table_id').populate('order_items_id')
+    if(data.start_time === "null")
+    {
+      return res.json({
+        message: 'Table didnt start yet',
+      });
+    }
+    const startTime : any = data.start_time;
+    const endTime = new Date().toISOString();
+
+    const start= Date.parse(startTime); 
+    const end= Date.parse(endTime); 
+    
+    const price = data.pool_table_id.price;
+    const hours = (end - start) / (1000 * 60 * 60)
+
+    const cost = (end - start) / (1000 * 60 * 60) * price;
+    
+    res.json({
+      startTime : startTime,
+      endTime : endTime,
+      price : price,
+      hours : Number(hours.toFixed(3)),
+      cost : Number(cost.toFixed(3)),
+    });  
+    await pool_TableModel.updateOne( {_id : idTable},{
+      status : "available"
+    });
+    await ordersModel.deleteOne( {_id : data._id});
+  } catch (error) {
+    next(error);
+  }
+};
+

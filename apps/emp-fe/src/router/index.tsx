@@ -26,6 +26,10 @@ import ListCategory from '../pages/admin/Category/ListCategory';
 import DetailCategory from '../pages/admin/Category/DetailCategory';
 import CreateProduct from '../pages/admin/Category/CreateProduct';
 
+import HomeOrder from '../pages/admin/Order/Home';
+import OrderDetail from '../pages/admin/Order/Order';
+
+
 import Homepage from '../pages/admin/Login/Home';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import RoleProtected, {
@@ -88,7 +92,20 @@ const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: '/order',
+    element: <ProtectedRoute><LayoutDashboard /></ProtectedRoute>,
+    children: [
+      {
+        path: '',
+        element: <HomeOrder />,
+      },
+      {
+        path: ':id',
+        element: <OrderDetail />,
+      },
+    ],
+  },
 
   {
     path: '/membership',

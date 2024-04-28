@@ -5,10 +5,11 @@ const orders = new mongoose.Schema(
     pool_table_id : {
       type : ObjectId,
       ref : 'pool_table',
+      unique : true
     },
-    account_id : {
+    order_items_id : {
       type : ObjectId,
-      ref : 'account',
+      ref : 'order_items',
     },
     start_time : {
       type : Date,
