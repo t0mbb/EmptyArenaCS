@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState } from "react";
+import { useEffect } from "react";
 import {
-
   Table,
-
   Button,
   Form,
   ConfigProvider,
@@ -15,23 +13,24 @@ import {
   Modal,
   TreeSelect,
   Card,
-} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+} from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import {
   deletePoolTable,
   findPoolTable,
-} from '../../../services/pooltable.service';
+} from "../../../services/pooltable.service";
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 
-import '../../../assets/css/table.css';
-import { startService , stopService } from '../../../services/pooltable.service';
-import { TreeNode } from 'antd/es/tree-select';
+import "../../../assets/css/table.css";
+import { startService, stopService } from "../../../services/pooltable.service";
+import { TreeNode } from "antd/es/tree-select";
 
 const Home = () => {
   const navigate = useNavigate();
   let { id } = useParams();
   const [table, setList] = useState<any>([]);
+  const [product, setProduct] = useState<any>([]);
 
   const getDetailFromBE = async () => {
     const res = await findPoolTable(id);
@@ -41,11 +40,11 @@ const Home = () => {
   const start = () => {
     startService(id);
     window.location.reload();
-};
-const stop= () => {
-   stopService(id);
+  };
+  const stop = () => {
+    stopService(id);
     window.location.reload();
-};
+  };
 
   useEffect(() => {
     getDetailFromBE();
@@ -54,11 +53,11 @@ const stop= () => {
   const [form] = Form.useForm();
   const confirm = async (_id: string) => {
     deletePoolTable(_id);
-    message.success('Delete Success');
+    message.success("Delete Success");
   };
 
   const cancel = (e?: React.MouseEvent<HTMLElement>) => {
-    message.error('Cancel Delete');
+    message.error("Cancel Delete");
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,103 +70,122 @@ const stop= () => {
     setIsModalOpen(false);
   };
 
-  
+  const option = [
+    { value: "food", label: "Food" },
+    { value: "drink", label: "Drink" },
+    { value: "cues", label: "Cues" },
+    { value: "gloves", label: "Gloves" },
+  ];
+
+  const onSelectCatergory = (value: string) => {
+    // const data = CallAPI(value);
+    // setProduct(data);
+  }
+
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorBgBase: '#141414',
-          colorBgContainer: '#',
-          colorText: 'white',
-          colorBorderSecondary: '#a61d24',
+          colorBgBase: "#141414",
+          colorBgContainer: "#",
+          colorText: "white",
+          colorBorderSecondary: "#a61d24",
           borderRadius: 10,
         },
-      }}
-    >
-        <Modal title="Order"
-         open={isModalOpen}
-         onCancel={handleOk}
-         okButtonProps={{ style: { display: 'none' } }}>
-        <Divider/>
-               <Form
-          variant="filled"
-          form={form}
-          onFinish={handleOk}
-        >
+      }}>
+      <Modal
+        title="Order"
+        open={isModalOpen}
+        onCancel={handleOk}
+        okButtonProps={{ style: { display: "none" } }}>
+        <Divider />
+        <Form variant="filled" form={form} onFinish={handleOk}>
           <Form.Item
             label="Category"
             name="name"
-            rules={[{ required: true, message: 'Please choose!' }]}
-          >
-            <TreeSelect>
-              <TreeNode value="food" title="Food" />
-              <TreeNode value="drink" title="Drink" />
-              <TreeNode value="cues" title="Cues" />
-              <TreeNode value="gloves" title="Gloves" />
-            </TreeSelect>
+            rules={[{ required: true, message: "Please choose!" }]}>
+            <Select
+              defaultValue="lucy"
+              style={{ width: 120 }}
+              onChange={handleChange}
+              options={option}
+              onSelect={onSelectCatergory}
+            />
           </Form.Item>
-
+          {
+            product
+            ? (<>
+              
+            </>)
+            : null
+          }
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
             <Button type="primary" ghost htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
-            </Modal>
-       <FloatButton
+      </Modal>
+      <FloatButton
         shape="circle"
         type="primary"
-        onClick= {showModal}
+        onClick={showModal}
         style={{
-          width: '60px',
-          height: '60px',
-          position: 'absolute',
+          width: "60px",
+          height: "60px",
+          position: "absolute",
           marginRight: 20,
         }}
         icon={<PlusOutlined />}
       />
-       <div style={{overflowX: 'auto'  ,display: 'flex' ,  justifyContent: 'center'}}>
-      <Button
-        className="button"
+      <div
         style={{
-          marginTop : 15,
-          marginRight : 300,
-          color: 'whitesmoke',
-          backgroundColor: table.status === 'used' || table.status === "maintained"? 'gray' : '#e74748',
-        }}
-      onClick = {start}
-        disabled={table.status === 'used' || table.status  === 'maintained'}
-      >
-        Start Service
-      </Button>
-      <Button
-        className="button"
-        style={{
-          marginTop : 15,
-          color: 'whitesmoke',
-          backgroundColor: table.status === 'used' ? '#e74748' : 'gray',
-        }}
-        disabled={table.status === 'available' || table.status  === 'maintained'}
-        onClick = {stop}
-      >
-        Stop Service
-      </Button>
+          overflowX: "auto",
+          display: "flex",
+          justifyContent: "center",
+        }}>
+        <Button
+          className="button"
+          style={{
+            marginTop: 15,
+            marginRight: 300,
+            color: "whitesmoke",
+            backgroundColor:
+              table.status === "used" || table.status === "maintained"
+                ? "gray"
+                : "#e74748",
+          }}
+          onClick={start}
+          disabled={table.status === "used" || table.status === "maintained"}>
+          Start Service
+        </Button>
+        <Button
+          className="button"
+          style={{
+            marginTop: 15,
+            color: "whitesmoke",
+            backgroundColor: table.status === "used" ? "#e74748" : "gray",
+          }}
+          disabled={
+            table.status === "available" || table.status === "maintained"
+          }
+          onClick={stop}>
+          Stop Service
+        </Button>
       </div>
-      <Divider/>
-        <div>
-         
-      <div style ={{display : "flex" , justifyContent : "right"}}>
-      <Card title="Information"  style={{ width: 300  , height : 600  }}>
-      <p>Table Number |  {table.number}</p>
-      <p>Price per hour | {table.price} $</p>
-      <p>Table Type | {table.brandname}</p>
-      <Divider/>
-      <p>Starting </p>
-    </Card>
-    </div>
-    </div>
+      <Divider />
+      <div>
+        <div style={{ display: "flex", justifyContent: "right" }}>
+          <Card title="Information" style={{ width: 300, height: 600 }}>
+            <p>Table Number | {table.number}</p>
+            <p>Price per hour | {table.price} $</p>
+            <p>Table Type | {table.brandname}</p>
+            <Divider />
+            <p>Starting </p>
+          </Card>
+        </div>
+      </div>
     </ConfigProvider>
-    
   );
 };
 
