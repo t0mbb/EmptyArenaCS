@@ -4,7 +4,8 @@ import {
   createProduct,
   updateProduct,
   removeProduct,
-  findProduct} from '../controllers/product.controller';
+  findProduct,
+  findProductById} from '../controllers/product.controller';
 
   import {
     listCategory,
@@ -25,6 +26,7 @@ router.post('/createProduct', verifyToken, authorization([RoleName.ADMIN,RoleNam
 router.delete('/removeProduct/:productId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), removeProduct);
 
 router.get('/findProduct/:productId', verifyToken, findProduct);
+router.get('/findProductByCatId/:catId',verifyToken , findProductById)
 router.put('/updateProduct/:productId', verifyToken,authorization([RoleName.ADMIN]), updateProduct);
 
 

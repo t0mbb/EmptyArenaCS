@@ -105,7 +105,7 @@ export const Create: React.FC = () => {
               },
             ]}
           >
-            <Input prefix="$" defaultValue="10" type="number" min={0} step={1} />
+            <Input prefix="$"  type="number" />
           </Form.Item>
 
           <Form.Item

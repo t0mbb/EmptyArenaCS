@@ -11,6 +11,10 @@ const order_items = new mongoose.Schema(
     quantity: {
       type: Number,
     },
+    pool_table_id : {
+      type : ObjectId,
+      ref : 'pool_table',
+    },
   },
   {
     timestamps: true,

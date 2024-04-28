@@ -18,7 +18,7 @@ import { RoleName } from '../models/account.model';
 const router = express.Router();
 
 // Order routes
-router.get('/listOrder', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), listOrder);
+router.get('/listOrder/:tableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), listOrder);
 
 router.post('/createOrder', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), createOrder);
 
@@ -28,7 +28,7 @@ router.get('/findOrder/:orderId', verifyToken, findOrder);
 router.put('/updateOrder/:orderId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF,]), updateOrder);
 
 //Order Item Routes
-router.get('/listOrderItem', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), listOrderItem);
+router.get('/listOrderItem/:tableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), listOrderItem);
 
 router.post('/createOrderItem', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), createOrderItem);
 

@@ -1,7 +1,7 @@
 import { httpClient } from '../utils/HttpClient';
 
-export async function getListOrder() {
-  const data = await httpClient.get('/listOrder');
+export async function getListOrder(id : any) {
+  const data = await httpClient.get(`/listOrder/${id}`);
 
   return data
 }
@@ -31,8 +31,8 @@ export async function updateOrder(id : any , data : any){
 
 
 
-export async function getListOrderItem() {
-  const data = await httpClient.get('/listOrderItem');
+export async function getListOrderItem(id : any) {
+  const data = await httpClient.get(`/listOrderItem/${id}`);
 
   return data
 }

@@ -67,6 +67,19 @@ export const findProduct = async (req, res, next) => {
 };
 
 
+export const findProductById = async (req, res, next) => {
+  try {
+    const { catId } = req.params;
+    const result = await productModel.find({ category_id: catId });
+    res.json({
+      Result : result,
+      message: 'Product successfully found',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 export const listCategory = async (req, res, next) => {
   try {

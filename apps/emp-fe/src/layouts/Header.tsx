@@ -4,6 +4,7 @@ import {  theme as antTheme } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined  ,LogoutOutlined , UserOutlined} from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/dash.css';
+import avatar from '../assets/image/tooc.jpg';
 interface HeaderProps {
   collapsed: boolean;
   toggleCollapsed: () => void;
@@ -37,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ collapsed, toggleCollapsed }) =>
         }}
       />
    
-      <Avatar size={42} icon={<UserOutlined />} style={{ position: "absolute", inset: "13px 80px auto auto" }} />
+      <Avatar src={avatar} size={42} icon={<UserOutlined />} style={{ position: "absolute", inset: "13px 80px auto auto" }} />
       <span style={{
             width: 42, color:"whitesmoke",
             height: 42, position: "absolute", inset: "27px 190px auto auto" }}>{user.fullname}</span>

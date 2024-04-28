@@ -22,6 +22,11 @@ export async function findProduct(id : any){
   console.log(response);
   return response
 }
+export async function findProductbyCatId(id : any){
+  const response = await httpClient.get(`/findProductByCatId/${id}`);
+  console.log(response);
+  return response
+}
 export async function updateProduct(id : any , data : any){
   const response = await httpClient.put(`/updateProduct/${id}` , data);
   console.log(response);

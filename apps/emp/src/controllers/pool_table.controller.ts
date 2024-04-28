@@ -1,3 +1,4 @@
+import orderItemModel from '../models/order_items.model';
 import ordersModel from '../models/orders.model';
 import pool_TableModel from '../models/pool_table.model';
 import * as _ from 'lodash';
@@ -86,7 +87,10 @@ export const startService = async (req, res, next) => {
 export const stopService = async (req, res, next) => {
   try {
     const idTable = req.params.pool_TableId;
-    const data : any = await ordersModel.findOne({pool_table_id : idTable}).populate('pool_table_id').populate('order_items_id')
+    const data : any = await ordersModel.findOne({pool_table_id : idTable}).populate('pool_table_id')
+    const orderItem : any = await orderItemModel.find({pool_table_id : idTable}).populate('product_id');
+  
+
     if(data.start_time === "null")
     {
       return res.json({
@@ -102,19 +106,29 @@ export const stopService = async (req, res, next) => {
     const price = data.pool_table_id.price;
     const hours = (end - start) / (1000 * 60 * 60)
 
-    const cost = (end - start) / (1000 * 60 * 60) * price;
-    
+    let totalItem = 0 ;
+    orderItem.forEach(item => {
+      totalItem += item.quantity * item.product_id.price; 
+    }) 
+    console.log(totalItem);
+    const totalCost = (end - start) / (1000 * 60 * 60) * price + totalItem;
+    console.log(totalItem);
     res.json({
       startTime : startTime,
       endTime : endTime,
-      price : price,
+      pricePerHour : price,
+      totalItem : totalItem,
       hours : Number(hours.toFixed(3)),
-      cost : Number(cost.toFixed(3)),
+      totalCost : Number(totalCost.toFixed(3)),
     });  
+   
     await pool_TableModel.updateOne( {_id : idTable},{
       status : "available"
     });
     await ordersModel.deleteOne( {_id : data._id});
+    if(orderItem){
+      await orderItemModel.deleteMany({ pool_table_id: idTable });
+    }
   } catch (error) {
     next(error);
   }
