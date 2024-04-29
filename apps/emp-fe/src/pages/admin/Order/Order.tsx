@@ -171,7 +171,7 @@ const Home = () => {
             label="Quantity"
             name="quantity"
             rules={[{ required: true, type : 'number', message: "Please fill!" }]}>
-          <InputNumber/>
+          <InputNumber min={1} max={10}/>
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
             <Button style={{marginLeft : 50, marginTop : 15}} type="primary" ghost htmlType="submit">

@@ -101,7 +101,7 @@ export const Create: React.FC = () => {
             <Input />
           </Form.Item>
           <Form.Item
-          label = "description"
+          label = "Description"
            name="description" >
             <Input />
           </Form.Item>
@@ -113,20 +113,10 @@ export const Create: React.FC = () => {
               {
                 required: true,
                 message: 'Please fill and input right type! ',
-              },
-              {
-                validator: (noruleyet, value) => {
-                  if (value > 0 && value < 100 ) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error('Quantity can not over 100 !!!')
-                  );
-                },
-              },
-            ]}
+            }]}
+            
           >
-            <Input  defaultValue="1" type="number" min={0} step={1} />
+            <Input   type="number" min={0} step={1} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
