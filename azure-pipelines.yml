@@ -31,7 +31,7 @@ stages:
     - script: |
         set -e
         nx run-many --targets=build
-        cp package.json package-lock.json dist/apps/cms
+        cp package.json package-lock.json dist/apps/emp
         cd dist/apps/emp
         npm ci --omit=dev
       displayName: Build application
@@ -53,7 +53,7 @@ stages:
         replaceExistingArchive: true
 
     - publish: $(Build.ArtifactStagingDirectory)
-      artifact: cms
+      artifact: emp
 
 - stage: Deploy_Backend
   displayName: Deploy Backend stage
@@ -71,7 +71,7 @@ stages:
             - task: AzureRmWebAppDeployment@4
               displayName: 'Back-end Deploy'
               inputs:
-                azureSubscription: emptyarena-be
+                azureSubscription: emptyarena
                 appType: webAppLinux
                 WebAppName: emptyarena-be
                 RuntimeStack: 'NODE|20-lts'
@@ -94,7 +94,7 @@ stages:
             - task: AzureRmWebAppDeployment@4
               displayName: 'Front-end Deploy'
               inputs:
-                azureSubscription: emptyarena-be
+                azureSubscription: emptyarena
                 appType: webApp
                 WebAppName: emptyarena-fe
                 RuntimeStack: 'NODE|20-lts'
