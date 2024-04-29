@@ -53,7 +53,7 @@ stages:
         replaceExistingArchive: true
 
     - publish: $(Build.ArtifactStagingDirectory)
-      artifact: emp
+      artifact: cms
 
 - stage: Deploy_Backend
   displayName: Deploy Backend stage
