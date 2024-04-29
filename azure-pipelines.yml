@@ -46,14 +46,14 @@ stages:
 
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: dist/apps/emp-fe
+        rootFolderOrFile: dist/apps/cms-fe
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/emp-fe_$(Build.BuildId).zip
         replaceExistingArchive: true
 
     - publish: $(Build.ArtifactStagingDirectory)
-      artifact: cms
+      artifact: emp
 
 - stage: Deploy_Backend
   displayName: Deploy Backend stage
