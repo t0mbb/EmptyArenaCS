@@ -109,8 +109,7 @@ export const Update: React.FC = () => {
                 required: true,
                 message: 'Please fill and input right type!!!',
               },
-            ]}
-          >
+            ]}>
             <Input />
           </Form.Item>
           <Form.Item
