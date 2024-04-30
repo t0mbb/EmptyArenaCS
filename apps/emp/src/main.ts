@@ -9,7 +9,7 @@ import { handleError, handleNotFound } from './middlewares/handle-error';
 
 import cors from 'cors';
 
-const host = process.env.HOST ?? 'localhost';
+
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
@@ -38,6 +38,6 @@ async function main() {
 
 main().catch((err) => console.log(err));
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+app.listen(port, () => {
+  console.log(`[ ready ] On port ${port}`);
 });
