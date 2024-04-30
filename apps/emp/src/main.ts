@@ -32,7 +32,6 @@ async function main() {
   app.use(routerPoolTable);
   app.use(routerProduct);
   app.use(handleError);
-
   app.use(handleNotFound);
 }
 
