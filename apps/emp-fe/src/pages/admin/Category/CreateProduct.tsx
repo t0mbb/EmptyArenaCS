@@ -4,6 +4,7 @@ import {
   DatePicker,
   Form,
   Input,
+  InputNumber,
   Layout,
   TreeSelect,
   message,
@@ -75,26 +76,22 @@ export const Create: React.FC = () => {
             <Input/>
           </Form.Item>
           <Form.Item
-            label="Price"
-            name="price"
-            rules={[
-              {
-                required: true,
-                message: 'Please fill and input right type! ',
-              },
-              {
-                validator: (noruleyet, value) => {
-                  if (value > 0 && value < 1000 ) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error('Price per hours can not over 1000$ !!!')
-                  );
-                },
-              },
-            ]}
-          >
-            <Input prefix="$" defaultValue="10" type="number" min={0} step={1} />
+             label="Price per Hours"
+             name="price"
+             rules={[
+                 {
+                   required: true,
+                   message: 'Please fill ',
+                 },
+                 {
+                   validator: (_, value) =>
+                     value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                 },            
+               ]}
+           >
+             <InputNumber style ={{width : 300}}prefix="VNĐ" 
+              formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+             />
           </Form.Item>
 
           <Form.Item name="category_id" hidden>

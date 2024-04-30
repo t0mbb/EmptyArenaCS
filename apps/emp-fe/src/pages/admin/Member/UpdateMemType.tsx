@@ -4,6 +4,7 @@ import {
     DatePicker,
     Form,
     Input,
+    InputNumber,
     Layout,
     TreeSelect,
     message,
@@ -91,26 +92,22 @@ import {
             <Input disabled/>
           </Form.Item>
           <Form.Item
-            label="Price per Hours"
-            name="price"
-            rules={[
-                {
-                  required: true,
-                  message: 'Please fill ',
-                },
-                {
-                  validator: (noruleyet, value) => {
-                    if (value > 10 && value < 1000) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error('Price per hours can not over 1000$ !!!')
-                    );
+              label="Price per Hours"
+              name="price"
+              rules={[
+                  {
+                    required: true,
+                    message: 'Please fill ',
                   },
-                },
-              ]}
-          >
-            <Input prefix="$" type="number" min={0} step={0.1} />
+                  {
+                    validator: (_, value) =>
+                      value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                  },            
+                ]}
+            >
+              <InputNumber style ={{width : 300}}prefix="VNĐ" 
+               formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              />
           </Form.Item>
 
           <Form.Item
@@ -129,21 +126,6 @@ import {
 
           <Form.Item label="Description" name="description">
             <Input.TextArea />
-          </Form.Item>
-
-          <Form.Item
-            label="Discount"
-            name="discount"
-            rules={[
-              { required: true, message: 'Please fill and input right type!' },
-            ]}
-          >
-            <TreeSelect>
-              <TreeNode value="5" title="5%" />
-              <TreeNode value="10" title="10%" />
-              <TreeNode value="15" title="15%" />
-              <TreeNode value="20" title="20%" />
-            </TreeSelect>
           </Form.Item>
 
 

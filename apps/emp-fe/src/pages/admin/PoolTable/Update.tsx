@@ -4,6 +4,7 @@ import {
     DatePicker,
     Form,
     Input,
+    InputNumber,
     Layout,
     TreeSelect,
     message,
@@ -143,18 +144,14 @@ import {
                   message: 'Please fill ',
                 },
                 {
-                  validator: (noruleyet, value) => {
-                    if (value && value < 100) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error('Price per hours can not over 100$ !!!')
-                    );
-                  },
-                },
+                  validator: (_, value) =>
+                    value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                },            
               ]}
           >
-            <Input prefix="$" type="number" min={0} step={0.1} />
+            <InputNumber style ={{width : 300}}prefix="VNĐ" 
+              formatter={(value: any) => `${parseFloat(value).toLocaleString()}`}
+            />
           </Form.Item>
 
           <Form.Item

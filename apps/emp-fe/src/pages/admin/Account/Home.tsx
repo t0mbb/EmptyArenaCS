@@ -68,6 +68,7 @@ const Home = () => {
         },
       }}
     >
+      <div style ={{overflowX : "auto"}}>
      <FloatButton
       shape="circle"
       type="primary"
@@ -131,6 +132,7 @@ const Home = () => {
           )}
         />
       </Table>
+      </div>
     </ConfigProvider>
   );
 };

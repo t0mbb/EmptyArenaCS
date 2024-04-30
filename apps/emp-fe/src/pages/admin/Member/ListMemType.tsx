@@ -163,7 +163,7 @@ const Home = () => {
                 padding: '5px 10px',
               }}
             >
-              {`${price} $`}
+             {parseFloat(price).toLocaleString()} VNĐ
             </Tag>
           )}
         />

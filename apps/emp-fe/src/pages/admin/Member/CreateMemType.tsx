@@ -4,6 +4,7 @@ import {
   DatePicker,
   Form,
   Input,
+  InputNumber,
   Layout,
   TreeSelect,
   message,
@@ -86,26 +87,22 @@ export const Create: React.FC = () => {
             <TreeSelect>{typeList}</TreeSelect>
           </Form.Item>
           <Form.Item
-            label="Price"
+            label="Price per Hours"
             name="price"
             rules={[
-              {
-                required: true,
-                message: 'Please fill and input right type! ',
-              },
-              {
-                validator: (noruleyet, value) => {
-                  if (value > 0 && value < 1000 ) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error('Price per hours can not over 1000$ !!!')
-                  );
+                {
+                  required: true,
+                  message: 'Please fill ',
                 },
-              },
-            ]}
+                {
+                  validator: (_, value) =>
+                    value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                },            
+              ]}
           >
-            <Input prefix="$"  type="number" />
+            <InputNumber style ={{width : 300}}prefix="VNĐ" 
+             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            />
           </Form.Item>
 
           <Form.Item
@@ -126,20 +123,7 @@ export const Create: React.FC = () => {
             <Input.TextArea />
           </Form.Item>
 
-          <Form.Item
-            label="Discount"
-            name="discount"
-            rules={[
-              { required: true, message: 'Please fill and input right type!' },
-            ]}
-          >
-            <TreeSelect>
-              <TreeNode value="5" title="5%" />
-              <TreeNode value="10" title="10%" />
-              <TreeNode value="15" title="15%" />
-              <TreeNode value="20" title="20%" />
-            </TreeSelect>
-          </Form.Item>
+      
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
             <Button type="primary" ghost htmlType="submit">

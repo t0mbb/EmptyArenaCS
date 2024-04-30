@@ -110,16 +110,18 @@ export const stopService = async (req, res, next) => {
     orderItem.forEach(item => {
       totalItem += item.quantity * item.product_id.price; 
     }) 
-    console.log(totalItem);
+
     const totalCost = (end - start) / (1000 * 60 * 60) * price + totalItem;
-    console.log(totalItem);
+   
     res.json({
       startTime : startTime,
       endTime : endTime,
       pricePerHour : price,
-      totalItem : totalItem,
+      totalItemCost : totalItem,
+      tableNumber : data.pool_table_id.number,
+      orderItem : orderItem,
       hours : Number(hours.toFixed(3)),
-      totalCost : Number(totalCost.toFixed(3)),
+      totalCost : Number(totalCost.toFixed(2)),
     });  
    
     await pool_TableModel.updateOne( {_id : idTable},{

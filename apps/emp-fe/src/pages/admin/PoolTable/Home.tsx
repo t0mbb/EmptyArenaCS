@@ -66,6 +66,7 @@ const Home = () => {
         },
       }}
     >
+       <div style ={{overflowX : "auto"}}>
       <FloatButton
         shape="circle"
         type="primary"
@@ -126,7 +127,7 @@ const Home = () => {
                 padding: '5px 10px',
               }}
             >
-              {`${price} $`}
+                {parseFloat(price).toLocaleString()} VNĐ
             </Tag>
           )}
         />
@@ -196,6 +197,7 @@ const Home = () => {
           )}
         />
       </Table>
+      </div>
     </ConfigProvider>
   );
 };

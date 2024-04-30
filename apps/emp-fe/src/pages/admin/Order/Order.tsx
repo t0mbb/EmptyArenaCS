@@ -25,7 +25,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import {
   findPoolTable,
 } from "../../../services/pooltable.service";
-
+import qr from "../../../assets/image/qr.png"
 import { useNavigate, useParams } from "react-router-dom";
 
 import "../../../assets/css/table.css";
@@ -42,8 +42,9 @@ const Home = () => {
   const [category , setCategory] = useState<any>([]);
   const [listOrderItem , setOrderItem] = useState<any>([]);
   const [orderDetail, setOrderDetail]  = useState<any>([]);
-
- 
+  const [Bill, setBill]  = useState<any>([]);
+  
+  
   const getDetailFromBE = async () => {
     const res = await findPoolTable(id);
     const respond = await getListCategory();
@@ -58,9 +59,11 @@ const Home = () => {
     startService(id);
     window.location.reload();
   };
-  const stop = () => {
-    stopService(id);
-    window.location.reload();
+  const stop = async () => {
+    const res = await stopService(id);
+    setBill(res.data);
+    console.log(res.data);
+    showBill();
   };
 
   useEffect(() => {
@@ -69,11 +72,16 @@ const Home = () => {
 
   const [form] = Form.useForm();
 
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const [isModalBillOpen, setIsModalBillOpen] = useState(false);
+  
+  const [isModalItemOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const showBill = () => {
+    setIsModalBillOpen(true);
   };
 
   const confirmOrderItem = async (values: any) => {
@@ -93,6 +101,8 @@ const Home = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalBillOpen(false);
+    window.location.reload();
   };
   const DeleteOrderItem = async (_id : any) =>
     {
@@ -125,11 +135,67 @@ const Home = () => {
           borderRadius: 10,
         },
       }}>
+      <Modal 
+        style={{justifyContent : 'center' , display : 'flex'   }}
+        open={isModalBillOpen}
+        onOk={handleCancel}
+        
+        cancelButtonProps={{ style: { display: "none" } }}>
+           <Divider />
+           <span style= {{justifyContent : 'center' , display : 'flex' , fontSize : 20 , textTransform : 'uppercase' , marginBottom : 10 , marginTop : 10 , fontWeight : "bold"}}>EMPTY ARENA</span>
+           <Divider />
+           <span style= {{justifyContent : 'center' , display : 'flex'  , fontSize : 20 , textTransform : 'uppercase' , marginBottom : 10 , marginTop : 10 , fontWeight : "bold"}}>Bill</span>
+           <Card>
+           <div style={{ marginBottom: 10 }}>
+           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold', marginRight: 100 , marginBottom : 10 }}>Table Number :</span>
+                <span>{Bill.tableNumber}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold', marginRight: 100 , marginBottom : 10 }}>Start at:</span>
+                <span>{new Date(Bill.startTime).toLocaleString()}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold', marginBottom : 10}}>End at:</span>
+                <span>{new Date(Bill.endTime).toLocaleString()}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold',  marginBottom : 10 }}>Price Per Hours : </span>
+                <span>{parseFloat(Bill.pricePerHour).toLocaleString()}</span>
+            </div>
+            <Divider/>
+            {Bill.orderItem?.length>0 ?
+             (<>
+             {Bill.orderItem.map((item :any) => (
+             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold',  marginBottom : 10 }}>{item.product_id.name} | x{item.quantity} </span>
+                <span>{parseFloat(item.product_id.price).toLocaleString()}</span>
+            </div>
+          ))}
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold',  marginBottom : 10 , marginTop : 20 }}>Total Item Cost :  </span>
+                <span>{parseFloat(Bill.totalItemCost).toLocaleString()}</span>
+            </div>
+              <Divider/>
+
+            </>) : null}
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 'bold',  marginBottom : 10 }}>Total Cost : </span>
+                <span>{parseFloat(Bill.totalCost).toLocaleString()}</span>
+            </div>
+       </div>
+           </Card>
+          <Divider/>
+          <img src={qr}  style={{ width :400 }}/>
+          
+      </Modal>
+
+
 
       <Modal
         title="Order"
         style={{justifyContent : 'center' , display : 'flex'   }}
-        open={isModalOpen}
+        open={isModalItemOpen}
         onCancel={handleCancel}
         okButtonProps={{ style: { display: "none" } }}>
         <Divider />
@@ -183,9 +249,6 @@ const Home = () => {
             : null
           }  
       </Modal>
-
-
-
       <FloatButton
         shape="circle"
         type="primary"
@@ -195,7 +258,6 @@ const Home = () => {
           height: "60px",
           position: "absolute",
           marginRight: 20,
-          
         }}
         icon={<PlusOutlined />}
       />
@@ -258,7 +320,6 @@ const Home = () => {
           </Button>
         </Popconfirm>]}>
         <List.Item.Meta
-         avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${1}`} />}
           title={<span style = {{textTransform: 'uppercase'}}>Product Name :  {item.product_id.name} </span>}
           description={<span style={{color : "whitesmoke"}}>Quantity : x{item.quantity} </span>}
         />
@@ -272,7 +333,7 @@ const Home = () => {
         <div style={{ marginLeft : 20 }}>
           <Card title="Information" style={{ width: 300, height: 600 }}>
            <p>Table Number |  <Tag style ={{marginLeft : 25 , marginBottom : 5 , padding : 5  }}> {table.number}</Tag></p>
-          <p>Price per hour | <Tag style ={{marginLeft : 25 , marginBottom : 5 , padding : 5}}> {table.price}  $ </Tag></p>
+          <p>Price per hour| <Tag style ={{marginLeft : 25 , marginBottom : 5 , padding : 5}}> {parseFloat(table.price).toLocaleString()} VND </Tag></p>
          <p>Table Type |  <Tag style ={{marginLeft : 25 , padding : 5 , textTransform: 'uppercase'}}> {table.brandname}</Tag></p> 
             <Divider />
             {orderDetail ?

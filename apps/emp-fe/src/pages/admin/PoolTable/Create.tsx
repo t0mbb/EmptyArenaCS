@@ -4,6 +4,7 @@ import {
   DatePicker,
   Form,
   Input,
+  InputNumber,
   Layout,
   TreeSelect,
   message,
@@ -31,18 +32,6 @@ const formItemLayout = {
 };
 
 export const Create: React.FC = () => {
-  const statusList = Object.keys(StatusName).map((status) => {
-    if (status) {
-      return (
-        <TreeNode
-          key={status.toLowerCase()}
-          title={status}
-          value={status.toLowerCase()}
-        />
-      );
-    }
-    return null;
-  });
 
   const brandList = Object.keys(BrandName).map((brand) => {
     if (brand) {
@@ -91,6 +80,7 @@ export const Create: React.FC = () => {
           style={{ maxWidth: 600 }}
           form={form}
           onFinish={onFinish}
+          initialValues={{ status : "available"}}
         >
           <Form.Item
             label="Table Number"
@@ -101,18 +91,12 @@ export const Create: React.FC = () => {
                 message: 'Please fill ',
               },
               {
-                validator: (norule, value) => {
-                  if (value && value < 30) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error('Table number cannot over than 30!')
-                  );
-                },
+                validator: (_, value) =>
+                  value <= 100 ? Promise.resolve() : Promise.reject('Table number cannot be greater than 100'),
               },
             ]}
           >
-            <Input type="number"/>
+            <InputNumber type="number" />
           </Form.Item>
           <Form.Item
             label="Brand of Table"
@@ -130,26 +114,22 @@ export const Create: React.FC = () => {
                   message: 'Please fill ',
                 },
                 {
-                  validator: (noruleyet, value) => {
-                    if (value && value < 100) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error('Price per hours can not over 100$ !!!')
-                    );
-                  },
-                },
+                  validator: (_, value) =>
+                    value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                },            
               ]}
           >
-            <Input prefix="$" defaultValue= "4" type="number" min={0} step={0.1} />
+            <InputNumber style ={{width : 300}}prefix="VNĐ" 
+             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            />
           </Form.Item>
 
           <Form.Item
             label="Status"
             name="status"
             rules={[{ required: true, message: 'Please choose!' }]}
-          >
-            <TreeSelect>{statusList}</TreeSelect>
+             hidden >
+           
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
