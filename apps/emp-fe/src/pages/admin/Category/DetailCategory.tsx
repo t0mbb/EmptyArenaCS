@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import {
   Space,
   Table,
+  Form,
   Tag,
   type FormProps,
   Button,
@@ -10,10 +11,16 @@ import {
   FloatButton,
   Popconfirm,
   message,
+  Divider,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
 } from 'antd';
 import {
   getListProduct,
   deleteProduct,
+  upProduct,
 } from '../../../services/product.service';
 import { getListAcc } from '../../../services/account.service';
 import '../../../assets/css/table.css';
@@ -22,6 +29,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import RoleProtected, {
   RoleName,
 } from '../../../components/RoleProtected/RoleProtected';
+import form from 'antd/es/form';
 const { Column } = Table;
 interface DataType {
   key: React.Key;
@@ -36,14 +44,17 @@ const Detail = () => {
   const navigate = useNavigate();
   let { id } = useParams();
   const [listProduct, setList] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [proid , setProID] = useState();
+
   const getListFromBE = async () => {
     const res = await getListProduct(id);
     console.log(res);
     setList(res.data.product);
   };
-
+  const [form] = Form.useForm();
   const confirm = async (_id: string) => {
-   const res = await deleteProduct(_id);
+    const res = await deleteProduct(_id);
     message.info(res.data.message);
     await getListFromBE();
   };
@@ -59,6 +70,25 @@ const Detail = () => {
   if (!listProduct) {
     return <div>Loading...</div>;
   }
+
+
+  const showModal = (id : any) => {
+    setIsModalOpen(true);
+   
+    setProID(id);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const confirmUpdate = async (values: any) => {
+    
+    setIsModalOpen(false);
+    console.log(values);
+    upProduct(values);
+    window.location.reload();
+    message.success("Success adding ")
+    
+  };
 
   return (
     <ConfigProvider
@@ -84,21 +114,68 @@ const Detail = () => {
         }}
         icon={<PlusOutlined />}
       />
+
+      <Modal
+        title="Quantity"
+        style={{ justifyContent: 'center', display: 'flex' }}
+        open={isModalOpen}
+        onCancel={handleCancel}
+        okButtonProps={{ style: { display: 'none' } }}
+      >
+        <Divider />
+
+        <Form
+          variant="filled"
+          form={form}
+          onFinish={confirmUpdate}
+          initialValues={{ product_id: proid }}
+        >
+          <Form.Item
+            label="Product"
+            name="product_id"
+            hidden
+          >
+           
+          </Form.Item>
+          <Form.Item
+            label="Quantity"
+            name="quantity"
+            rules={[
+              { required: true, type: 'number', message: 'Please fill!' },
+            ]}
+          >
+            <InputNumber min={1} max={100} />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+            <Button
+              style={{ marginLeft: 50, marginTop: 15 }}
+              type="primary"
+              ghost
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Table dataSource={listProduct}>
         <Column
           title="Name"
           dataIndex="name"
-          render={(name : string) => (
+          render={(name: string) => (
             <Tag
               style={{
                 backgroundColor: 'green',
                 borderRadius: '10px',
                 padding: '5px 10px',
               }}
-            > {name}</Tag>
+            >
+              {' '}
+              {name}
+            </Tag>
           )}
         />
-         <Column
+        <Column
           title="Price"
           dataIndex="price"
           key="price"
@@ -115,7 +192,7 @@ const Detail = () => {
             </Tag>
           )}
         />
-          <Column
+        <Column
           title="Quantity"
           dataIndex="quantity_in_stock"
           key="quantity_in_stock"
@@ -132,17 +209,19 @@ const Detail = () => {
             </Tag>
           )}
         />
-        <Column
-          title="Description"
-          dataIndex="description"
-          key="description"
-        />
+        <Column title="Description" dataIndex="description" key="description" />
         <Column
           title="Action"
           key="action"
           render={(_: any, record: DataType) => (
+            
             <Space size="middle">
-        
+                <Button type="primary"  className="button"
+             style={{color : "whitesmoke" , backgroundColor : "black"}}
+                onClick={() => showModal(record._id)} 
+              >
+                +
+              </Button>
               <RoleProtected allowedRole={[RoleName.ADMIN]}>
                 <Popconfirm
                   title="Delete the task"
@@ -160,7 +239,9 @@ const Detail = () => {
                     Delete
                   </Button>
                 </Popconfirm>
+               
               </RoleProtected>
+              
             </Space>
           )}
         />

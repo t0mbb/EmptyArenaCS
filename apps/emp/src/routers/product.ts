@@ -5,7 +5,8 @@ import {
   updateProduct,
   removeProduct,
   findProduct,
-  findProductById} from '../controllers/product.controller';
+  findProductById,
+  upProduct} from '../controllers/product.controller';
 
   import {
     listCategory,
@@ -23,12 +24,12 @@ router.get('/listProduct/:categoryId', verifyToken, authorization([RoleName.ADMI
 
 router.post('/createProduct', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), createProduct);
 
-router.delete('/removeProduct/:productId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), removeProduct);
+router.delete('/removeProduct/:productId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), removeProduct);
 
 router.get('/findProduct/:productId', verifyToken, findProduct);
 router.get('/findProductByCatId/:catId',verifyToken , findProductById)
-router.put('/updateProduct/:productId', verifyToken,authorization([RoleName.ADMIN]), updateProduct);
-
+router.put('/updateProduct/:productId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF]), updateProduct);
+router.put('/upProduct/', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF]), upProduct);
 
 // Category routes
 
@@ -39,7 +40,7 @@ router.post('/createCategory', verifyToken, authorization([RoleName.ADMIN,RoleNa
 router.delete('/removeCategory/:categoryId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF,]), removeCategory);
 
 router.get('/findCategory/:categoryId', verifyToken, findCategory);
-router.put('/updateCategory/:categoryId', verifyToken,authorization([RoleName.ADMIN]), updateCategory);
+router.put('/updateCategory/:categoryId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF]), updateCategory);
 
 export default router;
 

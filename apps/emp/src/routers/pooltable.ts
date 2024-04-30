@@ -20,7 +20,7 @@ router.post('/createPoolTable', verifyToken, authorization([RoleName.ADMIN,RoleN
 router.delete('/removePoolTable/:pool_TableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), removePoolTable);
 
 router.get('/startService/:pool_TableId', verifyToken, authorization([RoleName.ADMIN,RoleName.STAFF]), startService);
-router.get('/stopService/:pool_TableId' , verifyToken ,authorization([RoleName.ADMIN,RoleName.STAFF]),stopService )
+router.get('/stopService/:pool_TableId' , verifyToken ,authorization([RoleName.ADMIN,RoleName.STAFF]),stopService)
 
 router.get('/findPoolTable/:pool_TableId', verifyToken, findPoolTable);
 router.put('/updatePoolTable/:pool_TableId', verifyToken,authorization([RoleName.ADMIN,RoleName.STAFF]), updatePoolTable);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cloneElement }  from 'react'
 
 export enum RoleName {
   ADMIN = 'admin',
@@ -14,7 +14,6 @@ const RoleProtected = (props: { allowedRole: RoleName[], children: React.ReactEl
         return null;
     }
 
-  return props.children;
+    return cloneElement(props.children, props);
 }
-
 export default RoleProtected

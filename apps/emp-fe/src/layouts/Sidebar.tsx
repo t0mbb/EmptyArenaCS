@@ -19,29 +19,30 @@ type MenuItem = {
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, items, onClick }) => {
-    const checkChildren = (menuItems: MenuItem[]): React.ReactNode[] => {
+    const menuItem = (menuItems: MenuItem[]) => {
         return menuItems.map(item => {
-            if (item.children) {
-                  if(item.key === "/Faculty")
+                  if(item.key ==="/account"){
                   return(
-                    <RoleProtected allowedRole={[RoleName.ADMIN]} >
-                    <Menu.SubMenu key={item.key} title={item.label} icon={item.icon}>
-                        {checkChildren(item.children)}
-                    </Menu.SubMenu>
-                    </RoleProtected>)
-                    else {
-                        return (<Menu.SubMenu key={item.key} title={item.label} icon={item.icon}>
-                            {checkChildren(item.children)}
-                        </Menu.SubMenu>)
-                    }
-            } else {
-                return (
-                    <Menu.Item key={item.key} icon={item.icon}>
-                        {item.label}
+                    <RoleProtected allowedRole={[RoleName.ADMIN]} {...item}>
+                    <Menu.Item  >
+                    {item.label}
                     </Menu.Item>
-                );
-            }
-        });
+                    </RoleProtected>)}
+                  else if (item.key === "/pooltable"){
+                    return(
+                        <RoleProtected allowedRole={[RoleName.ADMIN]} {...item}>
+                        <Menu.Item  >
+                        {item.label}
+                        </Menu.Item>
+                        </RoleProtected>)
+                  }
+                    else {
+                        return (<Menu.Item key={item.key} title={item.label} icon={item.icon}>
+                          {item.label}
+                        </Menu.Item>)
+                    }
+            } 
+        );
     };
 
     
@@ -51,7 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, items, onClick }) =
             <div className="demo-logo-vertical" />
             <ConfigProvider theme={{ token: {  colorText: '#e84749' , colorBgContainer : "#fac8c3"}}} >   
             <Menu className =" menu-side-bar" mode="inline" defaultSelectedKeys={['1']} onClick={onClick}>
-                {checkChildren(items)}
+            {menuItem(items)}
             </Menu>
             </ConfigProvider>
         </Sider>

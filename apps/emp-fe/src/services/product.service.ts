@@ -32,6 +32,11 @@ export async function updateProduct(id : any , data : any){
   console.log(response);
   return response
 }
+export async function upProduct( data : any){
+  const response = await httpClient.put(`/upProduct/` , data);
+  console.log(response);
+  return response
+}
 
 export async function getListCategory() {
   const data = await httpClient.get('/listCategory');

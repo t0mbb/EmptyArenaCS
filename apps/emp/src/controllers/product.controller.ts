@@ -41,6 +41,24 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
+export const upProduct = async (req, res, next) => {
+  try {
+    const productId = req.body.product_id;
+
+    const respond = await productModel.findOne({_id : productId })
+    let total = respond.quantity_in_stock + req.body.quantity;
+    await productModel.updateOne( {_id : productId},{
+      quantity_in_stock : total
+    });
+    return res.json({
+      message: total,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export const removeProduct = async (req, res, next) => {
   try {
     const productId = req.params.productId;
