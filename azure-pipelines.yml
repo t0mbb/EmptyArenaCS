@@ -71,7 +71,7 @@ stages:
             - task: AzureRmWebAppDeployment@4
               displayName: 'Back-end Deploy'
               inputs:
-                azureSubscription: emptyarena
+                azureSubscription: Empty
                 appType: webAppLinux
                 WebAppName: emptyarena-be
                 RuntimeStack: 'NODE|20-lts'
@@ -94,7 +94,7 @@ stages:
             - task: AzureRmWebAppDeployment@4
               displayName: 'Front-end Deploy'
               inputs:
-                azureSubscription: emptyarena
+                azureSubscription: Empty
                 appType: webApp
                 WebAppName: emptyarena-fe
                 RuntimeStack: 'NODE|20-lts'
