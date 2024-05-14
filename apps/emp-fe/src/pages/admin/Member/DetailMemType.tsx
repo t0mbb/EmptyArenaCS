@@ -123,33 +123,7 @@ const Detail = () => {
             </Tag>
           )}
         />
-        <Column
-          title="|Active status|"
-          dataIndex="active"
-          key="active"
-          render={(active: boolean) => {
-            let tagColor = '';
-            let status = '';
-            if (active) {
-              tagColor = 'green';
-              status = 'ACTIVE';
-            } else {
-              tagColor = 'red';
-              status = 'DEACTIVE';
-            }
-            return (
-              <Tag
-                style={{
-                  backgroundColor: tagColor,
-                  borderRadius: '10px',
-                  padding: '5px 10px',
-                }}
-              >
-                {status}
-              </Tag>
-            );
-          }}
-        />
+       
         <Column
           title="Action"
           key="action"

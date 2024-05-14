@@ -188,7 +188,7 @@ const Detail = () => {
                 padding: '5px 10px',
               }}
             >
-              {`${price} $`}
+            {parseFloat(price).toLocaleString()} VNĐ
             </Tag>
           )}
         />

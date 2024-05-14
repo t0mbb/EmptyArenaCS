@@ -36,6 +36,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, items, onClick }) =
                         </Menu.Item>
                         </RoleProtected>)
                   }
+                  else if (item.key === "/order"){
+                    return(
+                        <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]} {...item}>
+                        <Menu.Item  >
+                        {item.label}
+                        </Menu.Item>
+                        </RoleProtected>)
+                  }
                     else {
                         return (<Menu.Item key={item.key} title={item.label} icon={item.icon}>
                           {item.label}

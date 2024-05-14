@@ -101,7 +101,7 @@ import {
                   },
                   {
                     validator: (_, value) =>
-                      value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                      value <= 10000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
                   },            
                 ]}
             >

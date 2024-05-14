@@ -80,7 +80,8 @@ export const Create: React.FC = () => {
             rules={[
               {
                 required: true,
-                message: 'Please fill and input right type!!!',
+                type: "email",
+                message: 'Please fill and input right type email!!!',
               },
             ]}
           >

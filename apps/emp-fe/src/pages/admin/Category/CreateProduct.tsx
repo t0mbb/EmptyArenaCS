@@ -85,11 +85,11 @@ export const Create: React.FC = () => {
                  },
                  {
                    validator: (_, value) =>
-                     value <= 1000000 ? Promise.resolve() : Promise.reject('Price must not exceed 1,000,000'),
+                     value <= 10000000 ? Promise.resolve() : Promise.reject('Price must not exceed 10,000,000'),
                  },            
                ]}
            >
-             <InputNumber style ={{width : 300}}prefix="VNĐ" 
+             <InputNumber style ={{width : 300}} prefix="VNĐ" 
               formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
              />
           </Form.Item>

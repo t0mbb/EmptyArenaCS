@@ -121,23 +121,23 @@ const router = createBrowserRouter([
       },
       {
         path: 'detailmemtype/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><DetailMemType /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><DetailMemType /></RoleProtected>,
       },
       {
         path: 'updatememType/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><UpdateMemType /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN ,RoleName.STAFF]}><UpdateMemType /></RoleProtected>,
       },
       {
         path: 'createMemberType',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><CreateMemberType /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><CreateMemberType /></RoleProtected>,
       },
       {
         path: 'createMemberCard/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><CreateMemberCard /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><CreateMemberCard /></RoleProtected>,
       },
       {
         path: 'updatememCard/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><UpdateMemberCard /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><UpdateMemberCard /></RoleProtected>,
       },
       
     ],
@@ -154,19 +154,19 @@ const router = createBrowserRouter([
  
       {
         path: 'createCategory',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><CreateCategory /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><CreateCategory /></RoleProtected>,
       },
       {
         path: 'createProduct/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><CreateProduct /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><CreateProduct /></RoleProtected>,
       },
       {
         path: 'updatememCard/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><UpdateMemberCard /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN , RoleName.STAFF]}><UpdateMemberCard /></RoleProtected>,
       },
       {
         path: 'detailCategory/:id',
-        element: <RoleProtected allowedRole={[RoleName.ADMIN]}><DetailCategory /></RoleProtected>,
+        element: <RoleProtected allowedRole={[RoleName.ADMIN, RoleName.STAFF]}><DetailCategory /></RoleProtected>,
       },
     ],
   },
