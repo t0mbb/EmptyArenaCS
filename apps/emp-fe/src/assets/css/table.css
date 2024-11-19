@@ -5,7 +5,103 @@
 .Column{
     border : 1px solid rgb(0, 0, 0);
 }
-.outlet{
-    color:whitesmoke;
-    background-color: #141414;
+
+
+.ant-card .ant-card-actions{
+    background : white;
+}
+.ant-card .ant-card-actions :hover{
+    color:#b10c1d !important;
+
+}
+.ant-card .ant-card-actions>li >span >.anticon { 
+    font-size : 16px;
+}
+.custom-form-item {
+
+    background-color: rgba(128, 127, 127, 0.1); /* Example customization */
+    padding: 15px; /* Example customization */
+    border-radius: 5px; /* Example customization */
+  }
+
+  .custom-input {
+    background-color: transparent; /* Light background */
+    border: 2px solid rgba(148, 145, 145, 0.5); /* Semi-transparent border */
+    color: white !important; /* Text color */
+    padding: 10px; /* Padding inside the input */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(242, 1, 1, 0.1); /* Subtle shadow */
+    max-width: fit-content;
+  }
+  .custom-input .ant-input {
+    background-color: rgba(126, 123, 123, 0.1); /* Light background */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+    color: white !important; /* Text color */
+    padding: 10px; /* Padding inside the input */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(233, 5, 5, 0.1); /* Subtle shadow */
+    max-width: fit-content;
+  }
+  .custom-input:focus {
+    background-color : transparent;
+    border-color: #790813; /* Optional: Change border color on focus */
+    outline: none; /* Remove the default outline */
+    box-shadow: 0 0 5px rgba(30, 30, 31, 0.5); /* Optional: Add a subtle shadow */
+  }
+  .custom-input:hover {
+    background-color : transparent;
+    border-color: #790813; /* Optional: Change border color on focus */
+    outline: none; /* Remove the default outline */
+    box-shadow: 0 0 5px rgba(31, 31, 32, 0.5); /* Optional: Add a subtle shadow */
+  }
+  .custom-input .ant-input-prefix {
+    color : white;
+  }
+  .custom-input .ant-input-affix-wrapper {
+    background : transparent;
+  }
+  .custom-input .ant-input-affix-wrapper:hover {
+    border-color: #790813; 
+  }
+  .ant-radio-wrapper{
+    margin-right : 20px;
+  }
+
+  .dropaccount {
+  width: 80%;
+
+  border: 1px solid #790813;
+  font-weight: bold;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+/* When the dropdown is active or hovered */
+
+/* Styling each tree node item */
+.dropaccount:hover, .dropaccount:focus-within {
+  border-color: black;
+  background-color: transparent !important;
+}
+
+/* Styling each tree node item */
+.dropaccount .dropaccount-node {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover and focus state for tree node items */
+.dropaccount .dropaccount-node:hover {
+  background-color: transparent!important;
+  color: black;
+}
+
+/* Selected node style */
+.dropaccount .ant-select-selection-item {
+  background-color: transparent !important;
+  color: white;
+  font-weight: bold;
 }

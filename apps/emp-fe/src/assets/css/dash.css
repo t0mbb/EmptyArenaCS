@@ -1,49 +1,50 @@
 
 .demo-logo-vertical {
-    height: 40px;
-
-    background: #fff; 
-    margin: 20px;
-    margin-bottom: 200px;
-    background: url('../image/Logo.png'); 
-    background-size: contain;
-
-    
+    height: 100px;
+    margin: 20px auto;
+    margin-bottom: 280px;
+    background: url('../image/Logo.png') no-repeat center center;
+    background-size: 75%;
+    box-shadow: 0 0 10px rgba(254, 0, 0, 0.606) !important;
+   
   }
-  
-  @media (max-width: 768px) {
-    .demo-logo-vertical {
-      display: none; 
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .demo-logo-vertical {
-      display: block; 
-    }
-  }
+  .ant-layout-sider-collapsed .demo-logo-vertical {
+    height: 70px; 
+    background-size: 75%; 
+    margin: 15px auto;
+    margin-bottom: 280px;
+}
 
-.Content {
-  margin: 24px 16px;
-  padding : 24px;
-  min-Height: auto;
-  min-width: auto;
+ 
+.ant-dropdown-menu {
+  background : black !important;
+  margin: 20px auto !important;
+}
+.ant-dropdown-menu-item{
+  color : teal !important;
   
-  border-radius:9px;
-  letter-spacing: 1px;
-  border: 1.5px solid #e84749
 }
 .btn-header{
   
 }
 .menu-side-bar{
 
-  
+  background : white;
   color:#e84749;
-  background-color: #141414;
   border-radius:9px;
   letter-spacing: 1px;
-
+  box-shadow: 0 0 10px rgba(254, 0, 0, 0.606) !important;
+  padding : 10px;
+ 
 }
 
 
+.header { 
+  background : linear-gradient(to right, #000000 25% ,#390b0b 100% );
+  padding : 10px;
+  border : 2px solid black;
+  
+}
+.ant-layout-content{
+  background : linear-gradient(to right, #000000 50% ,#330a0a 100% );
+}

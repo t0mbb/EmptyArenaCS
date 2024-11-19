@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { RoleName } from '../models/account.model';
+import { RoleName } from '../models/account/account.model';
 
 class JwtError extends Error {
   status: number;
@@ -16,6 +16,7 @@ export function verifyToken(req, _res, next) {
   
   const userAccessToken = bearerToken.split('Bearer ')[1];
   const userData : any = jwt.verify(userAccessToken, process.env.JWT_SECRET);
+  ///// tach va check lai useraccount
   req.user = userData.userAccount;
 
   return next();

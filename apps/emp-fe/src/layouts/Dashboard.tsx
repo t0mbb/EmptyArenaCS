@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
-  UserOutlined, PlusOutlined ,FacebookFilled
+  UserOutlined, TeamOutlined ,TrademarkOutlined , UserSwitchOutlined
 } from '@ant-design/icons';
 
 import { Breadcrumb, Button, ConfigProvider, Layout, Menu, theme } from 'antd';
@@ -35,21 +35,17 @@ const App: React.FC = () => {
       label: 'Home',
       icon: <UserOutlined />,
     }, 
-    {
-      key: '/account',
-      label: 'Account',
-      icon: <UserOutlined />,
-    }, 
-    { key: '/pooltable', label: 'Pool Table', icon: <FacebookFilled />  },
-    { key: '/order', label: 'Order', icon: <FacebookFilled />  },
-    { key: '/membership', label: 'Membership', icon: <MenuFoldOutlined />  },
-    { key: '/category', label: 'Category', icon: <MenuFoldOutlined /> },
+
+    { key: '/rank', label: 'Rank', icon: <TrademarkOutlined />  },
+    { key: '/manageAcc', label: 'Account', icon: <UserSwitchOutlined />  },
+    { key: '/schedule', label: 'Schedule', icon: <TeamOutlined />  },
+    { key: '/tournaments', label: 'Tournaments', icon: <MenuFoldOutlined /> },
   
 
   ] 
 
   return (
-    <ConfigProvider theme={{ token: { colorBgLayout: "#141414" , colorPrimary: '#e84749' , }}} >   
+    <ConfigProvider theme={{ token: { colorBgBase :'darkgray'}}} >   
         <Layout style={{ minHeight: '100vh'  }}>
         
         <SidebarComponent collapsed={collapsed} items={items} onClick={onClick} />

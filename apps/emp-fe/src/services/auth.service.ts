@@ -6,4 +6,8 @@ export async function login(username: string, passwords: string) {
 }
 export async function logout() {
   
-}
+} 
+export async function googleLogin() {
+  const data = await httpClient.get('/auth/google/callback');
+  return data
+} 

@@ -10,7 +10,7 @@ const NotFound: React.FC = () => {
       title="404"
       subTitle="Sorry, the page you visited does not exist."
       extra={
-        <Button onClick={() => navigate('/')} type="primary">
+        <Button onClick={() => navigate('/home')} type="primary">
           Back Home
         </Button>
       }

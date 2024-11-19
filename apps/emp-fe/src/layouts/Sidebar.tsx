@@ -21,14 +21,15 @@ type MenuItem = {
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, items, onClick }) => {
     const menuItem = (menuItems: MenuItem[]) => {
         return menuItems.map(item => {
-                  if(item.key ==="/account"){
+         
+                  if(item.key ==="/manageAcc"){
                   return(
                     <RoleProtected allowedRole={[RoleName.ADMIN]} {...item}>
                     <Menu.Item  >
                     {item.label}
                     </Menu.Item>
                     </RoleProtected>)}
-                  else if (item.key === "/pooltable"){
+                  else if (item.key === "/rank"){
                     return(
                         <RoleProtected allowedRole={[RoleName.ADMIN]} {...item}>
                         <Menu.Item  >
@@ -56,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, items, onClick }) =
     
 
     return ( 
-        <Sider trigger={null} collapsible collapsed={collapsed} style={{backgroundColor: "#141414" }}>
+        <Sider trigger={null} collapsible collapsed={collapsed} style={{backgroundColor: "black" }}>
             <div className="demo-logo-vertical" />
             <ConfigProvider theme={{ token: {  colorText: '#e84749' , colorBgContainer : "#fac8c3"}}} >   
             <Menu className =" menu-side-bar" mode="inline" defaultSelectedKeys={['1']} onClick={onClick}>

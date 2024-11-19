@@ -1,0 +1,9 @@
+.custom-form-item {
+    margin-bottom: 20px; /* Example customization */
+    background-color: rgba(255, 255, 255, 0.1); /* Example customization */
+    padding: 10px; /* Example customization */
+    border-radius: 5px; /* Example customization */
+  }
+.custom-form-input { 
+    padding : 5px;
+}

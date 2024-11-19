@@ -1,12 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import routerAccount from './routers/account';
-import routermemberCard from './routers/membercard';
-import routerOrders from './routers/orders';
-import routerPoolTable from './routers/pooltable';
-import routerProduct from './routers/product';
-import { handleError, handleNotFound } from './middlewares/handle-error';
+import routerMatch from './routers/match';
+import routerRank from './routers/rank'
+import routerSchedule from './routers/schedule';
 
+import { handleError, handleNotFound } from './middlewares/handle-error';
 import cors from 'cors';
 
 
@@ -25,12 +24,11 @@ async function main() {
   );
 
   app.use(express.json());
-
+  
   app.use(routerAccount);
-  app.use(routermemberCard);
-  app.use(routerOrders);
-  app.use(routerPoolTable);
-  app.use(routerProduct);
+  app.use(routerMatch);
+  app.use(routerRank);
+  app.use(routerSchedule);
   app.use(handleError);
   app.use(handleNotFound);
 }

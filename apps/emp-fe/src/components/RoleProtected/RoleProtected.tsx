@@ -1,8 +1,8 @@
 import React, { cloneElement }  from 'react'
 
 export enum RoleName {
-  ADMIN = 'admin',
-  STAFF = 'staff',
+  ADMIN = '$2a$12$OgjIqSg/4vTRczCIjTNXuuA1gewxE/JdRYnsBe4avjzK3ARFtrA6m',
+  STAFF = '$2a$12$yYDaOIhmmY6BgKXx6sxJAOShiLrA/8C41MjlLEu4FQxDZ9kqRa9Nu',
   GUEST = 'guest',
 }
 

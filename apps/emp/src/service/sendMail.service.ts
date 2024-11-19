@@ -13,10 +13,10 @@ const transporter = nodemailer.createTransport({
 
 export const sendMail = async (email : string ) => {
     const mailOptions = {
-        from: "EmptyArena@gmail.com",
+        from: '"EmptyArenaCorps" <no-reply@gmail.com>',
         to: email,
-        subject: "Your Membership are going to expire   ",
-        text: "You need to resign soon!!!!!!",
+        subject: " Co Lich Hen Danh Sap Toi   ",
+        text: "Vao emptyarena.corps de check",
       };
     await transporter.sendMail(mailOptions)
 }

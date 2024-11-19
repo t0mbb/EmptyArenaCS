@@ -7,7 +7,7 @@ export async function getListAcc() {
 }
 
 export async function createAcc(data : any){
-  const res = await httpClient.post('/user/create' , data);
+  const res = await httpClient.post('/register' , data);
   return res
 }
 
@@ -31,4 +31,12 @@ export async function accUpdate(id : any , data:any){
   const response = await httpClient.put(`/user/update/${id}` , data);
  
   return response
+}
+
+export async function rePass (id : any , data : any) {
+  const res = await httpClient.post(`/repass/${id}` , data);
+  return res 
+}
+export async function google(){
+  return await httpClient.get('/auth/google');
 }

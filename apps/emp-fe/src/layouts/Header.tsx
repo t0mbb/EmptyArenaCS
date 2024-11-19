@@ -1,7 +1,7 @@
 import React from 'react';
-import { Avatar, Button, ConfigProvider } from 'antd';
+import { Avatar, Button, ConfigProvider ,Menu , Dropdown, MenuProps } from 'antd';
 import {  theme as antTheme } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined  ,LogoutOutlined , UserOutlined} from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined  ,LogoutOutlined , UserOutlined , SettingOutlined , MailOutlined} from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/dash.css';
 import avatar from '../assets/image/tooc.jpg';
@@ -23,26 +23,76 @@ export const Header: React.FC<HeaderProps> = ({ collapsed, toggleCollapsed }) =>
     nav('/login');
   };
 
-  return ( <ConfigProvider theme={{ token: {colorBgContainer : "#",  colorBgBase :"#141414" , colorPrimary: '#e84749',borderRadius: 2}}}>
-    <header className='header'   >
+  const menuProps: MenuProps = {
+    items: [
+      {
+        key: 'profile',
+        label: 'Profile',
+        onClick: () => nav('/account'),
+        icon: <MenuFoldOutlined/>
+      },
+      {
+        key: 'settings',
+        label: 'Settings',
+        onClick: () => console.log('Go to Settings'),
+        icon: <SettingOutlined/>
+      },
+    ],
+  };
+  return ( <ConfigProvider theme={{ token: {}}}>
+    <header className='header'>
       <Button
-        type="text"
-        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={toggleMenu}
-        style={{
+          type="text"
+          icon={<MailOutlined />}
+          onClick={() => nav('/schedule')}
+          style={{
             fontSize: '30px',
             width: 64,
             height: 64,
-            color: 'red',
-       
-        }}
-      />
-   
-      <Avatar src={avatar} size={42} icon={<UserOutlined />} style={{ position: "absolute", inset: "13px 80px auto auto" }} />
-      <span style={{
-            width: 42, color:"whitesmoke",
-            height: 42, position: "absolute", inset: "27px 190px auto auto" }}>{user.fullname}</span>
-   
+            position: 'absolute',
+            inset : '10px 270px auto auto '
+          }}
+        />
+    <Button
+          type="text"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={toggleMenu}
+          style={{
+            fontSize: '30px',
+            width: 64,
+            height: 64,
+          }}
+        />
+    <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            border: '2px solid rgba(255, 255, 255, 0.2)', 
+            borderRadius: '8px',
+            padding: '5px 10px',
+            position: 'absolute',
+            inset: '18px 90px auto auto', 
+            fontSize : "13px"
+          }}
+        >
+      <Dropdown menu={menuProps} trigger={['click']} placement="bottomRight" >
+         <div >
+          <Avatar
+            src={avatar}
+            size={42}
+            icon={<UserOutlined />}
+          />
+          <span
+            style={{
+              marginLeft: '10px',
+              color: "whitesmoke",
+            }}
+          >
+            {user.fullname}
+          </span>
+         </div>
+       </Dropdown>
+        </div>
       <Button
         type="text"
         icon={<LogoutOutlined />}
@@ -51,8 +101,9 @@ export const Header: React.FC<HeaderProps> = ({ collapsed, toggleCollapsed }) =>
             fontSize: '30px',
             width: 64,
             height: 64,
-            color: 'red',
-            position: "absolute", inset: "auto 15px auto auto"
+            color : "red",
+            position: "absolute", inset: "auto 12px auto auto",
+            borderRadius : "40px"
           }}
         
       />
